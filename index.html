@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Vibe Crush — Match-3 Saga for @vibevibefun</title>
+  <link rel="icon" href="assets/vibers/viber1.webp" type="image/webp" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Fullscreen Particle Effects Canvas -->
+  <canvas id="particlesCanvas"></canvas>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="game-header">
+      <div class="brand-badge">
+        <div class="brand-logo">⚡</div>
+        <div class="brand-text">
+          <h1>VIBE CRUSH</h1>
+          <span>FOR RAIDERS @VIBEVIBEFUN</span>
+        </div>
+      </div>
+      <div class="header-controls">
+        <button id="btnGallery" class="btn-icon" title="PFP Trophy Vault">🏆</button>
+        <button id="btnMute" class="btn-icon" title="Toggle Sound / BGM">🔊</button>
+        <button id="btnRestart" class="btn-icon" title="Restart Level">↺</button>
+      </div>
+    </header>
+
+    <!-- Score & Move HUD -->
+    <div class="hud-panel">
+      <div class="hud-item">
+        <div class="hud-label">Stage</div>
+        <div id="levelBadge" class="hud-value highlight">L1</div>
+      </div>
+      <div class="hud-item">
+        <div class="hud-label">Score</div>
+        <div id="scoreValue" class="hud-value highlight">0</div>
+      </div>
+      <div class="hud-item">
+        <div class="hud-label">Target</div>
+        <div id="targetValue" class="hud-value">1,200</div>
+      </div>
+      <div class="hud-item">
+        <div class="hud-label">Moves</div>
+        <div id="movesValue" class="hud-value moves">22</div>
+      </div>
+    </div>
+
+    <!-- Objective Progress Bar -->
+    <div class="progress-container">
+      <div id="progressFill" class="progress-fill"></div>
+    </div>
+
+    <!-- Objective status bar -->
+    <div class="objective-bar">
+      <div id="objectiveDesc" class="objective-text">Reach <b>1,200</b> points in <b>22</b> moves</div>
+      <div id="comboBadge" class="combo-badge">2x FRENZY!</div>
+    </div>
+
+    <!-- Match-3 Board Area -->
+    <div class="board-wrapper">
+      <div id="boardGrid" class="board-grid">
+        <!-- Rendered dynamically by game.js -->
+      </div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="bottom-controls">
+      <button class="btn-secondary" onclick="window.open('https://testnet.vibevibe.fun/vibe-vibers/for-raiders', '_blank')">
+        <span>🌐</span> Testnet Raiders
+      </button>
+      <a id="btnShareCommunity" class="btn-primary" target="_blank" href="https://twitter.com/intent/tweet?text=Raid%20the%20testnet%20with%20me%20on%20Vibe%20Crush!%20%F0%9F%8E%AE%E2%9A%A1%20%40vibevibefun%20%23VibeCrush&url=https%3A%2F%2Ftestnet.vibevibe.fun%2Fvibe-vibers%2Ffor-raiders">
+        <span>🐦</span> Share on X
+      </a>
+    </div>
+  </div>
+
+  <!-- Win Modal -->
+  <div id="modalWin" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header success">
+        <h2 id="winLevelTitle">Stage Cleared!</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">You crushed the FUD and boosted the vibe!</p>
+      </div>
+      <div id="winStars" class="modal-stars">★★★</div>
+      
+      <div class="modal-stats">
+        <div class="hud-item">
+          <div class="hud-label">Final Score</div>
+          <div id="winScore" class="hud-value highlight">0</div>
+        </div>
+        <div class="hud-item">
+          <div class="hud-label">Moves Left</div>
+          <div id="winMovesLeft" class="hud-value moves">0</div>
+        </div>
+      </div>
+
+      <div class="unlocked-pfp">
+        <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent-purple); font-weight: 700;">✨ New Raider PFP Unlocked!</span>
+        <img id="winRewardImg" class="pfp-preview" src="" alt="Unlocked Viber" />
+        <span id="winRewardName" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Raider</span>
+        <a id="btnDownloadReward" class="btn-download-pfp" href="#" download="viber_pfp.webp">⬇ Download PFP</a>
+      </div>
+
+      <div class="modal-actions">
+        <a id="btnShareWin" class="btn-share-x" target="_blank" href="#">
+          <span>🐦</span> Share Victory to X (@vibevibefun)
+        </a>
+        <button id="btnNextLevel" class="btn-primary" style="justify-content: center; width: 100%;">
+          Next Stage ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over / Retry Modal -->
+  <div id="modalFail" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header fail">
+        <h2>Out of Moves!</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">The FUD crept in before reaching the target.</p>
+      </div>
+
+      <div class="modal-stats">
+        <div class="hud-item">
+          <div class="hud-label">Your Score</div>
+          <div id="failScore" class="hud-value highlight">0</div>
+        </div>
+        <div class="hud-item">
+          <div class="hud-label">Target Needed</div>
+          <div id="failTarget" class="hud-value">0</div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnRetryLevel" class="btn-primary" style="justify-content: center; width: 100%;">
+          Try Again ↺
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PFP Gallery / Trophy Modal -->
+  <div id="modalGallery" class="modal-overlay">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header">
+        <h2>Raider PFP Vault</h2>
+        <p style="color: var(--text-muted); font-size: 0.82rem;">Unlock and download exclusive Viber portraits by beating saga stages.</p>
+      </div>
+
+      <div id="galleryGrid" class="gallery-grid">
+        <!-- Rendered by game.js -->
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnCloseGallery" class="btn-secondary" style="justify-content: center; width: 100%;">
+          Back to Game
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
