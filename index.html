@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Vibe Crush — Match-3 Saga for @vibevibefun</title>
   <link rel="icon" href="assets/vibers/viber1.webp" type="image/webp" />
   <link rel="stylesheet" href="styles.css" />
@@ -12,95 +12,97 @@
   <canvas id="particlesCanvas"></canvas>
 
   <div class="app-container">
-    <!-- Header -->
-    <header class="game-header">
-      <div class="brand-badge">
-        <div class="brand-logo">⚡</div>
-        <div class="brand-text">
-          <h1>VIBE CRUSH</h1>
-          <span>FOR RAIDERS @VIBEVIBEFUN</span>
+    <div class="top-section">
+      <!-- Header -->
+      <header class="game-header">
+        <div class="brand-badge">
+          <div class="brand-logo">⚡</div>
+          <div class="brand-text">
+            <h1>VIBE CRUSH</h1>
+            <span>FOR RAIDERS @VIBEVIBEFUN</span>
+          </div>
+        </div>
+        <div class="header-controls">
+          <button id="btnSagaMap" class="btn-icon" title="Saga Map / Stages">🗺️</button>
+          <button id="btnGallery" class="btn-icon" title="PFP Trophy Vault">🏆</button>
+          <button id="btnMute" class="btn-icon" title="Toggle Sound / BGM">🔊</button>
+          <button id="btnRestart" class="btn-icon" title="Restart Stage">↺</button>
+        </div>
+      </header>
+
+      <!-- Career Rank & Total XP Bar -->
+      <div class="career-bar">
+        <div class="rank-badge">
+          <span>🎖️</span> <span id="rankName">Novice Raider</span>
+        </div>
+        <div class="career-stats">
+          <span>Career: <b id="xpValue">0 XP</b></span>
         </div>
       </div>
-      <div class="header-controls">
-        <button id="btnSagaMap" class="btn-icon" title="Saga Map / Stages">🗺️</button>
-        <button id="btnGallery" class="btn-icon" title="PFP Trophy Vault">🏆</button>
-        <button id="btnMute" class="btn-icon" title="Toggle Sound / BGM">🔊</button>
-        <button id="btnRestart" class="btn-icon" title="Restart Stage">↺</button>
-      </div>
-    </header>
 
-    <!-- Career Rank & Total XP Bar -->
-    <div class="career-bar">
-      <div class="rank-badge">
-        <span>🎖️</span> <span id="rankName">Novice Raider</span>
+      <!-- Mode Selector Tabs -->
+      <div class="mode-tabs">
+        <div class="mode-tab active" data-mode="saga">🌟 Saga</div>
+        <div class="mode-tab" data-mode="time_rush">⏱ 60s Rush</div>
+        <div class="mode-tab" data-mode="endless">∞ Zen</div>
       </div>
-      <div class="career-stats">
-        <span>Career: <b id="xpValue">0 XP</b></span>
-      </div>
-    </div>
 
-    <!-- Mode Selector Tabs -->
-    <div class="mode-tabs">
-      <div class="mode-tab active" data-mode="saga">🌟 Saga Campaign</div>
-      <div class="mode-tab" data-mode="time_rush">⏱ 60s Rush</div>
-      <div class="mode-tab" data-mode="endless">∞ Zen Mode</div>
-    </div>
-
-    <!-- Difficulty Selector -->
-    <div class="diff-selector">
-      <span>Difficulty</span>
-      <div class="diff-pills">
-        <div class="diff-pill" data-diff="easy">Chill</div>
-        <div class="diff-pill active" data-diff="normal">Standard</div>
-        <div class="diff-pill" data-diff="hard">Hardcore 🔥</div>
+      <!-- Difficulty Selector -->
+      <div class="diff-selector">
+        <span>Difficulty</span>
+        <div class="diff-pills">
+          <div class="diff-pill" data-diff="easy">Chill</div>
+          <div class="diff-pill active" data-diff="normal">Standard</div>
+          <div class="diff-pill" data-diff="hard">Hard 🔥</div>
+        </div>
       </div>
-    </div>
 
-    <!-- Score & Move HUD -->
-    <div class="hud-panel">
-      <div class="hud-item">
-        <div class="hud-label">Stage</div>
-        <div id="levelBadge" class="hud-value highlight">S1</div>
+      <!-- Score & Move HUD -->
+      <div class="hud-panel">
+        <div class="hud-item">
+          <div class="hud-label">Stage</div>
+          <div id="levelBadge" class="hud-value highlight">S1</div>
+        </div>
+        <div class="hud-item">
+          <div class="hud-label">Score</div>
+          <div id="scoreValue" class="hud-value highlight">0</div>
+        </div>
+        <div class="hud-item">
+          <div class="hud-label">Target</div>
+          <div id="targetValue" class="hud-value">1,200</div>
+        </div>
+        <div class="hud-item">
+          <div id="movesLabel" class="hud-label">Moves</div>
+          <div id="movesValue" class="hud-value moves">22</div>
+        </div>
       </div>
-      <div class="hud-item">
-        <div class="hud-label">Score</div>
-        <div id="scoreValue" class="hud-value highlight">0</div>
-      </div>
-      <div class="hud-item">
-        <div class="hud-label">Target</div>
-        <div id="targetValue" class="hud-value">1,200</div>
-      </div>
-      <div class="hud-item">
-        <div id="movesLabel" class="hud-label">Moves</div>
-        <div id="movesValue" class="hud-value moves">22</div>
-      </div>
-    </div>
 
-    <!-- Objective Progress Bar -->
-    <div class="progress-container">
-      <div id="progressFill" class="progress-fill"></div>
-    </div>
+      <!-- Objective Progress Bar -->
+      <div class="progress-container">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
 
-    <!-- Objective status bar -->
-    <div class="objective-bar">
-      <div id="objectiveDesc" class="objective-text">Reach <b>1,200</b> points in <b>22</b> moves</div>
-      <div id="comboBadge" class="combo-badge">2x FRENZY!</div>
-    </div>
+      <!-- Objective status bar -->
+      <div class="objective-bar">
+        <div id="objectiveDesc" class="objective-text">Reach <b>1,200</b> points in <b>22</b> moves</div>
+        <div id="comboBadge" class="combo-badge">2x FRENZY!</div>
+      </div>
 
-    <!-- In-Game Power Booster Bar -->
-    <div class="boosters-bar">
-      <button id="btnBoosterHammer" class="btn-booster" title="Pick an obstacle or tile to smash">
-        <span>🔨 Laser Hammer</span>
-        <span id="countHammer" class="booster-count">3</span>
-      </button>
-      <button id="btnBoosterBomb" class="btn-booster" title="Spawn a Rainbow Vibe Bomb">
-        <span>★ Rainbow Sphere</span>
-        <span id="countBomb" class="booster-count">2</span>
-      </button>
-      <button id="btnBoosterShuffle" class="btn-booster" title="Re-shuffle all board tiles">
-        <span>🔀 Mix Board</span>
-        <span id="countShuffle" class="booster-count">3</span>
-      </button>
+      <!-- In-Game Power Booster Bar -->
+      <div class="boosters-bar">
+        <button id="btnBoosterHammer" class="btn-booster" title="Pick an obstacle or tile to smash">
+          <span>🔨 Hammer</span>
+          <span id="countHammer" class="booster-count">3</span>
+        </button>
+        <button id="btnBoosterBomb" class="btn-booster" title="Spawn a Rainbow Vibe Bomb">
+          <span>★ Rainbow</span>
+          <span id="countBomb" class="booster-count">2</span>
+        </button>
+        <button id="btnBoosterShuffle" class="btn-booster" title="Re-shuffle all board tiles">
+          <span>🔀 Mix</span>
+          <span id="countShuffle" class="booster-count">3</span>
+        </button>
+      </div>
     </div>
 
     <!-- Match-3 Board Area -->
@@ -113,7 +115,7 @@
     <!-- Bottom Controls -->
     <div class="bottom-controls">
       <button class="btn-secondary" onclick="window.open('https://testnet.vibevibe.fun/vibe-vibers/for-raiders', '_blank')">
-        <span>🌐</span> Testnet Raiders
+        <span>🌐</span> Raiders
       </button>
       <a id="btnShareCommunity" class="btn-primary" target="_blank" href="https://twitter.com/intent/tweet?text=Raid%20the%20testnet%20with%20me%20on%20Vibe%20Crush!%20%F0%9F%8E%AE%E2%9A%A1%20%40vibevibefun%20%23VibeCrush&url=https%3A%2F%2Fayoola-tech2024.github.io%2Fvibe-crush%2F">
         <span>🐦</span> Share on X
@@ -126,7 +128,7 @@
     <div class="modal-card">
       <div class="modal-header success">
         <h2 id="winLevelTitle">Stage Cleared!</h2>
-        <p style="color: var(--text-muted); font-size: 0.85rem;">You crushed the FUD and boosted the vibe!</p>
+        <p style="color: var(--text-muted); font-size: 0.82rem;">You crushed the FUD and boosted the vibe!</p>
       </div>
       <div id="winStars" class="modal-stars">★★★</div>
       
@@ -142,9 +144,9 @@
       </div>
 
       <div class="unlocked-pfp">
-        <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent-purple); font-weight: 700;">✨ New Raider PFP Unlocked!</span>
+        <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--accent-purple); font-weight: 700;">✨ New Raider PFP Unlocked!</span>
         <img id="winRewardImg" class="pfp-preview" src="" alt="Unlocked Viber" />
-        <span id="winRewardName" style="font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Raider</span>
+        <span id="winRewardName" style="font-size: 0.82rem; font-weight: 700; margin-bottom: 4px;">Raider</span>
         <a id="btnDownloadReward" class="btn-download-pfp" href="#" download="viber_pfp.webp">⬇ Download PFP</a>
       </div>
 
@@ -164,7 +166,7 @@
     <div class="modal-card">
       <div class="modal-header fail">
         <h2>Stage Failed!</h2>
-        <p style="color: var(--text-muted); font-size: 0.85rem;">The FUD crept in before reaching the target.</p>
+        <p style="color: var(--text-muted); font-size: 0.82rem;">The FUD crept in before reaching the target.</p>
       </div>
 
       <div class="modal-stats">
@@ -188,10 +190,10 @@
 
   <!-- Saga Map Modal -->
   <div id="modalSagaMap" class="modal-overlay">
-    <div class="modal-card" style="max-width: 440px;">
+    <div class="modal-card">
       <div class="modal-header">
         <h2>Saga World Map</h2>
-        <p style="color: var(--text-muted); font-size: 0.82rem;">Select any unlocked stage to replay or conquer.</p>
+        <p style="color: var(--text-muted); font-size: 0.8rem;">Select any unlocked stage to replay.</p>
       </div>
 
       <div id="sagaMapGrid" class="saga-map-grid">
@@ -208,10 +210,10 @@
 
   <!-- PFP Gallery / Trophy Modal -->
   <div id="modalGallery" class="modal-overlay">
-    <div class="modal-card" style="max-width: 440px;">
+    <div class="modal-card">
       <div class="modal-header">
         <h2>Raider PFP Vault</h2>
-        <p style="color: var(--text-muted); font-size: 0.82rem;">Unlock and download exclusive Viber portraits by beating saga stages.</p>
+        <p style="color: var(--text-muted); font-size: 0.8rem;">Unlock and download exclusive Viber portraits.</p>
       </div>
 
       <div id="galleryGrid" class="gallery-grid">
