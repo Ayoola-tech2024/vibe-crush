@@ -68,7 +68,7 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 16px 28px;
+  padding: 10px 14px 24px;
   z-index: 1;
 }
 
@@ -78,7 +78,7 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .brand-badge {
@@ -126,15 +126,15 @@ body::before {
 
 .header-controls {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .btn-icon {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -149,17 +149,122 @@ body::before {
   transform: translateY(-2px);
 }
 
+/* Career / Rank Bar */
+.career-bar {
+  width: 100%;
+  background: rgba(24, 28, 32, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+}
+
+.rank-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  color: var(--accent-cyan);
+}
+
+.career-stats {
+  display: flex;
+  gap: 12px;
+  color: var(--text-muted);
+}
+
+.career-stats b {
+  color: #fff;
+}
+
+/* Mode Switch Tabs */
+.mode-tabs {
+  width: 100%;
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: #13171b;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.mode-tab.active {
+  background: var(--bg-card);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 12px rgba(0, 245, 212, 0.2);
+}
+
+/* Difficulty Selector */
+.diff-selector {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111417;
+  border-radius: 10px;
+  padding: 4px 10px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.diff-selector span {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.diff-pills {
+  display: flex;
+  gap: 4px;
+}
+
+.diff-pill {
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: #181c20;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+.diff-pill.active {
+  background: var(--accent-purple);
+  color: #fff;
+  border-color: var(--accent-purple);
+}
+
 /* HUD Panel */
 .hud-panel {
   width: 100%;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 6px;
+  margin-bottom: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
@@ -179,7 +284,7 @@ body::before {
 }
 
 .hud-value {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
   color: #fff;
@@ -200,7 +305,7 @@ body::before {
   background: rgba(255, 255, 255, 0.06);
   border-radius: 999px;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -213,15 +318,15 @@ body::before {
   box-shadow: 0 0 10px rgba(0, 245, 212, 0.8);
 }
 
-/* Level Objective Bar */
+/* Objective Bar */
 .objective-bar {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding: 0 4px;
 }
 
@@ -233,9 +338,9 @@ body::before {
   background: rgba(0, 245, 212, 0.15);
   border: 1px solid var(--accent-cyan);
   color: var(--accent-cyan);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 900;
-  padding: 2px 10px;
+  padding: 2px 8px;
   border-radius: 999px;
   opacity: 0;
   transform: scale(0.8);
@@ -246,6 +351,50 @@ body::before {
   opacity: 1;
   transform: scale(1.05);
   box-shadow: 0 0 12px rgba(0, 245, 212, 0.6);
+}
+
+/* In-Game Power Booster Bar */
+.boosters-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.btn-booster {
+  background: #14171a;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.btn-booster.active {
+  border-color: var(--accent-gold);
+  background: rgba(250, 204, 21, 0.15);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+  transform: scale(1.05);
+}
+
+.btn-booster:hover {
+  background: #20252b;
+  border-color: var(--accent-cyan);
+}
+
+.booster-count {
+  background: #222;
+  border-radius: 999px;
+  padding: 1px 6px;
+  font-size: 0.65rem;
+  color: var(--accent-cyan);
 }
 
 /* Game Board Area */
@@ -311,6 +460,11 @@ body::before {
   box-shadow: 0 0 18px rgba(0, 245, 212, 0.85);
   z-index: 10;
   animation: pulse 0.8s infinite alternate;
+}
+
+.tile.hammer-target {
+  outline: 3px dashed var(--accent-red);
+  animation: pulse 0.6s infinite alternate;
 }
 
 /* Hint bounce animation */
@@ -405,23 +559,6 @@ body::before {
   100% { filter: hue-rotate(360deg); }
 }
 
-/* Floating Points Particles */
-.floating-text {
-  position: absolute;
-  color: var(--accent-cyan);
-  font-weight: 900;
-  font-size: 1.15rem;
-  pointer-events: none;
-  z-index: 30;
-  animation: floatUp 0.65s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-@keyframes floatUp {
-  0% { transform: translate(-50%, 0) scale(0.8); opacity: 1; }
-  100% { transform: translate(-50%, -45px) scale(1.25); opacity: 0; }
-}
-
 /* Laser Beam Animation */
 .laser-beam {
   position: absolute;
@@ -450,7 +587,7 @@ body::before {
   100% { opacity: 0; transform: scaleY(0.1); }
 }
 
-/* Screen Shake effect on big explosion */
+/* Screen Shake */
 .shake {
   animation: boardShake 0.28s ease-in-out;
 }
@@ -469,7 +606,7 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 14px;
+  margin-top: 10px;
   gap: 8px;
 }
 
@@ -477,9 +614,9 @@ body::before {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 12px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -498,9 +635,9 @@ body::before {
   background: linear-gradient(135deg, var(--accent-cyan), #02c39a);
   color: #0b1319;
   border: none;
-  padding: 10px 18px;
+  padding: 8px 16px;
   border-radius: 12px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
   display: flex;
@@ -572,7 +709,7 @@ body::before {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 14px 0;
+  margin: 12px 0;
   font-size: 2.2rem;
   color: var(--accent-gold);
   filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6));
@@ -581,16 +718,16 @@ body::before {
 .modal-stats {
   background: #111417;
   border-radius: 14px;
-  padding: 14px;
-  margin: 16px 0;
+  padding: 12px;
+  margin: 14px 0;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
 }
 
 .unlocked-pfp {
-  margin: 16px 0;
-  padding: 14px;
+  margin: 14px 0;
+  padding: 12px;
   background: rgba(168, 85, 247, 0.1);
   border: 1px solid rgba(168, 85, 247, 0.4);
   border-radius: 16px;
@@ -600,10 +737,10 @@ body::before {
 }
 
 .pfp-preview {
-  width: 96px;
-  height: 96px;
+  width: 90px;
+  height: 90px;
   border-radius: 16px;
-  margin: 10px 0;
+  margin: 8px 0;
   border: 2px solid var(--accent-purple);
   box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
 }
@@ -611,18 +748,18 @@ body::before {
 .modal-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .btn-share-x {
   background: #000;
   border: 1px solid #333;
   color: #fff;
-  padding: 12px;
+  padding: 10px;
   border-radius: 12px;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -639,13 +776,62 @@ body::before {
   transform: translateY(-1px);
 }
 
-/* Gallery Modal */
+/* Gallery / Map Grid */
+.saga-map-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 16px 0;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.saga-card {
+  background: #111417;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.saga-card.locked {
+  filter: grayscale(1) opacity(0.35);
+  cursor: not-allowed;
+}
+
+.saga-card.unlocked:hover {
+  border-color: var(--accent-cyan);
+  transform: translateY(-2px);
+}
+
+.saga-card img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+.saga-card h4 {
+  font-size: 0.75rem;
+  color: #fff;
+}
+
+.saga-card span {
+  font-size: 0.65rem;
+  color: var(--accent-gold);
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   margin: 16px 0;
-  max-height: 320px;
+  max-height: 300px;
   overflow-y: auto;
   padding: 4px;
 }
@@ -658,12 +844,6 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 0.2s;
-}
-
-.gallery-item.unlocked:hover {
-  border-color: var(--accent-purple);
-  transform: translateY(-2px);
 }
 
 .gallery-item.locked {
@@ -678,7 +858,7 @@ body::before {
 }
 
 .gallery-item span {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
   margin-top: 6px;
   color: var(--text-muted);
@@ -697,7 +877,6 @@ body::before {
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
-  transition: all 0.2s;
 }
 
 .btn-download-pfp:hover {

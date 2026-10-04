@@ -1,5 +1,5 @@
 // audio.js - Web Audio API Procedural Synthesizer for Vibe Crush
-// With Background Cyber-Lofi Groove, SFX & Mute Controls
+// With Background Cyber-Lofi Groove, SFX, Click & Voiceover Chimes
 
 class AudioManager {
   constructor() {
@@ -38,7 +38,6 @@ class AudioManager {
     return this.muted;
   }
 
-  // Procedural chill cyber-lofi background beat
   startBGM() {
     if (this.muted || !this.ctx || this.bgmPlaying) return;
     this.resume();
@@ -52,7 +51,7 @@ class AudioManager {
       [196, 246.94, 293.66]  // G
     ];
 
-    const intervalMs = 450; // chill tempo
+    const intervalMs = 420;
 
     this.bgmTimer = setInterval(() => {
       if (this.muted || !this.ctx) return;
@@ -60,14 +59,13 @@ class AudioManager {
       const chordIndex = Math.floor(this.bgmStep / 4) % chords.length;
       const chord = chords[chordIndex];
 
-      // Soft Sub Bass Kick on step 0 and 2
       if (this.bgmStep % 2 === 0) {
         const bassOsc = this.ctx.createOscillator();
         const bassGain = this.ctx.createGain();
         bassOsc.type = "sine";
         bassOsc.frequency.setValueAtTime(80, t);
         bassOsc.frequency.exponentialRampToValueAtTime(32, t + 0.18);
-        bassGain.gain.setValueAtTime(0.08, t);
+        bassGain.gain.setValueAtTime(0.07, t);
         bassGain.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
         bassOsc.connect(bassGain);
         bassGain.connect(this.ctx.destination);
@@ -75,18 +73,17 @@ class AudioManager {
         bassOsc.stop(t + 0.18);
       }
 
-      // Soft ambient chord pluck
       const noteFreq = chord[this.bgmStep % 3];
       const padOsc = this.ctx.createOscillator();
       const padGain = this.ctx.createGain();
       padOsc.type = "sine";
       padOsc.frequency.setValueAtTime(noteFreq, t);
       padGain.gain.setValueAtTime(0.02, t);
-      padGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+      padGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
       padOsc.connect(padGain);
       padGain.connect(this.ctx.destination);
       padOsc.start(t);
-      padOsc.stop(t + 0.4);
+      padOsc.stop(t + 0.38);
 
       this.bgmStep = (this.bgmStep + 1) % 16;
     }, intervalMs);
@@ -108,8 +105,8 @@ class AudioManager {
     const gain = this.ctx.createGain();
 
     osc.type = "sine";
-    osc.frequency.setValueAtTime(320, t);
-    osc.frequency.exponentialRampToValueAtTime(620, t + 0.08);
+    osc.frequency.setValueAtTime(340, t);
+    osc.frequency.exponentialRampToValueAtTime(640, t + 0.08);
 
     gain.gain.setValueAtTime(0.12, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
@@ -167,8 +164,8 @@ class AudioManager {
     const gain = this.ctx.createGain();
 
     osc.type = "sawtooth";
-    osc.frequency.setValueAtTime(920, t);
-    osc.frequency.exponentialRampToValueAtTime(120, t + 0.28);
+    osc.frequency.setValueAtTime(940, t);
+    osc.frequency.exponentialRampToValueAtTime(110, t + 0.28);
 
     gain.gain.setValueAtTime(0.28, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
@@ -231,8 +228,8 @@ class AudioManager {
     const gain = this.ctx.createGain();
 
     osc.type = "square";
-    osc.frequency.setValueAtTime(2000, t);
-    osc.frequency.exponentialRampToValueAtTime(650, t + 0.12);
+    osc.frequency.setValueAtTime(2200, t);
+    osc.frequency.exponentialRampToValueAtTime(600, t + 0.12);
 
     gain.gain.setValueAtTime(0.18, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
@@ -270,7 +267,7 @@ class AudioManager {
       { f: 523.25, d: 0.12 },
       { f: 659.25, d: 0.12 },
       { f: 783.99, d: 0.12 },
-      { f: 1046.5, d: 0.4 }
+      { f: 1046.5, d: 0.45 }
     ];
     let offset = 0;
     melody.forEach((note) => {
@@ -297,13 +294,13 @@ class AudioManager {
     const gain = this.ctx.createGain();
     osc.type = "sawtooth";
     osc.frequency.setValueAtTime(320, t);
-    osc.frequency.linearRampToValueAtTime(100, t + 0.48);
-    gain.gain.setValueAtTime(0.22, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.48);
+    osc.frequency.linearRampToValueAtTime(90, t + 0.5);
+    gain.gain.setValueAtTime(0.24, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start(t);
-    osc.stop(t + 0.48);
+    osc.stop(t + 0.5);
   }
 
   playClick() {
@@ -321,6 +318,23 @@ class AudioManager {
     gain.connect(this.ctx.destination);
     osc.start(t);
     osc.stop(t + 0.04);
+  }
+
+  playBooster() {
+    if (this.muted || !this.ctx) return;
+    this.resume();
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(300, t);
+    osc.frequency.exponentialRampToValueAtTime(1200, t + 0.25);
+    gain.gain.setValueAtTime(0.25, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.25);
   }
 }
 
