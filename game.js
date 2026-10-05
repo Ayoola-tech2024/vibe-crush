@@ -1,5 +1,5 @@
 // game.js - Comprehensive Vibe Crush Game Engine
-// Features: 10 Saga Stages, 3 Game Modes, 3 Difficulties, Career XP & Ranks, In-Game Boosters, Smart Hints, Particle Fireworks
+// Features: 10 Saga Stages, 3 Game Modes, 3 Difficulties, Career XP & Ranks, In-Game Boosters, Smart Hints, Particle Fireworks, Match-4 Small Blast Power-Ups, Announcer Banners, Nickname Collection, Interactive Tutorial
 
 const GRID_SIZE = 8;
 
@@ -13,7 +13,6 @@ const VIBERS = [
   { id: 7, name: "Ice Cap", color: "#06B6D4", img: "assets/vibers/viber7.webp" }
 ];
 
-// Expanded 10-Stage Saga Campaign
 const SAGA_STAGES = [
   { level: 1, title: "Stage 1: Scout Raider", targetScore: 1200, moves: 22, numTypes: 4, iceCount: 0, rewardPfp: "assets/vibers/viber1.webp", rewardName: "Scout Antenna" },
   { level: 2, title: "Stage 2: Break the FUD", targetScore: 2400, moves: 20, numTypes: 5, iceCount: 8, rewardPfp: "assets/vibers/viber2.webp", rewardName: "Defender Cap" },
@@ -27,7 +26,6 @@ const SAGA_STAGES = [
   { level: 10, title: "Stage 10: Supreme Vibe God", targetScore: 18000, moves: 14, numTypes: 7, iceCount: 26, rewardPfp: "assets/vibers/viber10.webp", rewardName: "Supreme Commander" }
 ];
 
-// Career Ranks
 const RANKS = [
   { name: "Novice Raider", minXP: 0 },
   { name: "FUD Fighter", minXP: 2500 },
@@ -100,8 +98,8 @@ class ParticleSystem {
 class VibeCrushGame {
   constructor() {
     this.board = [];
-    this.currentMode = "saga"; // 'saga', 'time_rush', 'endless'
-    this.difficulty = "normal"; // 'easy', 'normal', 'hard'
+    this.currentMode = "saga";
+    this.difficulty = "normal";
     this.stageIndex = 0;
     this.score = 0;
     this.movesLeft = 0;
@@ -110,14 +108,15 @@ class VibeCrushGame {
     this.iceLeft = 0;
     this.timerInterval = null;
 
-    // Career Progress
+    // Player Identity & Career
+    this.playerNickname = localStorage.getItem("vibecrush_nickname") || "";
     this.careerXP = parseInt(localStorage.getItem("vibecrush_xp") || "0");
     this.unlockedStage = parseInt(localStorage.getItem("vibecrush_unlocked_stage") || "0");
     this.unlockedPFPs = JSON.parse(localStorage.getItem("vibecrush_unlocked_pfps") || "[]");
 
     // Boosters Inventory
     this.boosters = JSON.parse(localStorage.getItem("vibecrush_boosters") || '{"hammer": 3, "bomb": 2, "shuffle": 3}');
-    this.activeBooster = null; // 'hammer'
+    this.activeBooster = null;
 
     // Interaction & Animation
     this.selectedTile = null;
@@ -138,10 +137,12 @@ class VibeCrushGame {
     this.progressFillEl = document.getElementById("progressFill");
     this.rankNameEl = document.getElementById("rankName");
     this.xpValueEl = document.getElementById("xpValue");
+    this.playerNicknameEl = document.getElementById("playerNickname");
 
     const pCanvas = document.getElementById("particlesCanvas");
     this.particles = new ParticleSystem(pCanvas);
 
+    this.checkOnboarding();
     this.updateCareerUI();
     this.updateBoosterUI();
     this.initEventListeners();
@@ -150,6 +151,28 @@ class VibeCrushGame {
 
   get currentStage() {
     return SAGA_STAGES[this.stageIndex];
+  }
+
+  checkOnboarding() {
+    if (!this.playerNickname) {
+      document.getElementById("modalNickname").classList.add("active");
+    } else {
+      this.playerNicknameEl.textContent = this.playerNickname;
+    }
+  }
+
+  setNickname(nick) {
+    this.playerNickname = nick.trim() || "Raider";
+    localStorage.setItem("vibecrush_nickname", this.playerNickname);
+    this.playerNicknameEl.textContent = this.playerNickname;
+    document.getElementById("modalNickname").classList.remove("active");
+
+    // Show tutorial on first session
+    const hasSeenTut = localStorage.getItem("vibecrush_seen_tutorial");
+    if (!hasSeenTut) {
+      document.getElementById("modalTutorial").classList.add("active");
+      localStorage.setItem("vibecrush_seen_tutorial", "true");
+    }
   }
 
   updateCareerUI() {
@@ -279,7 +302,7 @@ class VibeCrushGame {
 
         this.board[r][c] = {
           type: candidate,
-          special: null,
+          special: null, // 'laser_h', 'laser_v', 'bomb', 'rainbow'
           ice: false
         };
       }
@@ -385,7 +408,6 @@ class VibeCrushGame {
     this.boardEl.addEventListener("pointerup", (e) => {
       if (!activeSlot || this.isProcessing) return;
 
-      // Check if hammer booster is active
       if (this.activeBooster === "hammer") {
         this.useHammer(activeSlot.r, activeSlot.c);
         activeSlot = null;
@@ -428,6 +450,13 @@ class VibeCrushGame {
       return;
     }
 
+    // Direct tap detonation on special power-up tiles
+    const currentCell = this.board[r][c];
+    if (currentCell && currentCell.special && !this.selectedTile) {
+      this.detonateSpecialTileDirectly(r, c);
+      return;
+    }
+
     if (!this.selectedTile) {
       this.selectedTile = { r, c };
       window.audio.playClick();
@@ -448,11 +477,68 @@ class VibeCrushGame {
     }
   }
 
+  async detonateSpecialTileDirectly(r, c) {
+    this.isProcessing = true;
+    if (this.currentMode === "saga") this.decrementMove();
+
+    const cell = this.board[r][c];
+    const toClear = new Map();
+    toClear.set(`${r},${c}`, { r, c });
+
+    if (cell.special === "bomb") {
+      this.showShockwave(r, c);
+      window.audio.playExplosion();
+      this.shakeBoard();
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          const nr = r + dr;
+          const nc = c + dc;
+          if (this.isValidCoord(nr, nc)) toClear.set(`${nr},${nc}`, { r: nr, c: nc });
+        }
+      }
+    } else if (cell.special === "laser_h") {
+      window.audio.playLaser();
+      this.showLaserEffect(r, 0, "horizontal");
+      for (let sc = 0; sc < GRID_SIZE; sc++) toClear.set(`${r},${sc}`, { r, c: sc });
+    } else if (cell.special === "laser_v") {
+      window.audio.playLaser();
+      this.showLaserEffect(0, c, "vertical");
+      for (let sr = 0; sr < GRID_SIZE; sr++) toClear.set(`${sr},${c}`, { r: sr, c });
+    } else if (cell.special === "rainbow") {
+      await this.triggerRainbowSwap(r, c, r === 0 ? r + 1 : r - 1, c);
+      await this.resolveBoard();
+      this.checkLevelOutcome();
+      this.isProcessing = false;
+      return;
+    }
+
+    toClear.forEach((pt) => {
+      const slotEl = this.boardEl.querySelector(`[data-row='${pt.r}'][data-col='${pt.c}'] .tile`);
+      if (slotEl) slotEl.classList.add("pop");
+    });
+    await this.sleep(200);
+
+    toClear.forEach((pt) => {
+      if (this.board[pt.r][pt.c] && this.board[pt.r][pt.c].ice) {
+        this.board[pt.r][pt.c].ice = false;
+        this.iceLeft = Math.max(0, this.iceLeft - 1);
+        window.audio.playIceBreak();
+      }
+      this.board[pt.r][pt.c] = null;
+    });
+
+    this.addScore(toClear.size * 80);
+    await this.applyGravity();
+    this.renderBoard();
+    await this.resolveBoard();
+    this.checkLevelOutcome();
+    this.isProcessing = false;
+  }
+
   isValidCoord(r, c) {
     return r >= 0 && r < GRID_SIZE && c >= 0 && c < GRID_SIZE;
   }
 
-  // --- BOOSTER ACTIONS ---
   async useHammer(r, c) {
     if (this.boosters.hammer <= 0) return;
     this.boosters.hammer--;
@@ -487,7 +573,6 @@ class VibeCrushGame {
     window.audio.playRainbow();
     this.shakeBoard();
 
-    // Spawn a Rainbow Bomb at random central location
     const r = Math.floor(Math.random() * (GRID_SIZE - 2)) + 1;
     const c = Math.floor(Math.random() * (GRID_SIZE - 2)) + 1;
     this.board[r][c] = {
@@ -508,7 +593,6 @@ class VibeCrushGame {
     window.audio.playBooster();
     window.audio.playSwap();
 
-    // Collect all tile types and re-distribute randomly
     const allTypes = [];
     for (let r = 0; r < GRID_SIZE; r++) {
       for (let c = 0; c < GRID_SIZE; c++) {
@@ -544,6 +628,17 @@ class VibeCrushGame {
     const cell1 = this.board[r1][c1];
     const cell2 = this.board[r2][c2];
 
+    // Double Special Tile Combos (e.g. Bomb + Laser or Bomb + Bomb)
+    if (cell1.special && cell2.special) {
+      if (this.currentMode === "saga") this.decrementMove();
+      await this.triggerSpecialCombo(r1, c1, r2, c2);
+      await this.resolveBoard();
+      this.checkLevelOutcome();
+      this.isProcessing = false;
+      this.resetHintTimer();
+      return;
+    }
+
     if (cell1.special === "rainbow" || cell2.special === "rainbow") {
       if (this.currentMode === "saga") this.decrementMove();
       await this.triggerRainbowSwap(r1, c1, r2, c2);
@@ -572,6 +667,30 @@ class VibeCrushGame {
 
     this.isProcessing = false;
     this.resetHintTimer();
+  }
+
+  async triggerSpecialCombo(r1, c1, r2, c2) {
+    this.triggerAnnouncer("SUPER COMBO! 💥", "tasty");
+    this.shakeBoard();
+    window.audio.playExplosion();
+    this.showShockwave(r1, c1);
+    this.showShockwave(r2, c2);
+
+    const toClear = new Map();
+    // Wipe 5x5 area and cross lasers
+    for (let dr = -2; dr <= 2; dr++) {
+      for (let dc = -2; dc <= 2; dc++) {
+        const nr = r1 + dr;
+        const nc = c1 + dc;
+        if (this.isValidCoord(nr, nc)) toClear.set(`${nr},${nc}`, { r: nr, c: nc });
+      }
+    }
+    toClear.forEach((pt) => {
+      this.board[pt.r][pt.c] = null;
+    });
+    this.addScore(toClear.size * 100);
+    await this.applyGravity();
+    this.renderBoard();
   }
 
   decrementMove() {
@@ -647,19 +766,29 @@ class VibeCrushGame {
       this.comboCount++;
       this.showComboBadge();
 
+      // Announcer on big combos
+      if (this.comboCount === 2) this.triggerAnnouncer("SWEET! 🍬", "sweet");
+      if (this.comboCount === 3) this.triggerAnnouncer("TASTY! ⚡", "tasty");
+      if (this.comboCount >= 4) this.triggerAnnouncer("VIBING! 🔥", "tasty");
+
       const toClear = new Map();
       const newSpecials = [];
 
       matches.forEach((m) => {
+        // FORMING FOUR: Creates a small explosive bomb or line laser!
         if (m.count === 4) {
+          window.audio.playPowerSpawn();
           const pivot = m.group[1];
+          // Randomly spawn small 3x3 blast bomb or line laser!
+          const specialType = Math.random() > 0.5 ? "bomb" : (m.dir === "h" ? "laser_v" : "laser_h");
           newSpecials.push({
             r: pivot.r,
             c: pivot.c,
             type: this.board[pivot.r][pivot.c].type,
-            special: m.dir === "h" ? "laser_v" : "laser_h"
+            special: specialType
           });
         } else if (m.count >= 5) {
+          window.audio.playPowerSpawn();
           const pivot = m.group[2];
           newSpecials.push({
             r: pivot.r,
@@ -674,6 +803,7 @@ class VibeCrushGame {
         });
       });
 
+      // Detonate special tiles that were caught in matches
       const secondaryClear = new Set();
       toClear.forEach((pt) => {
         const cell = this.board[pt.r][pt.c];
@@ -690,6 +820,7 @@ class VibeCrushGame {
         } else if (cell.special === "bomb") {
           window.audio.playExplosion();
           this.shakeBoard();
+          this.showShockwave(pt.r, pt.c);
           for (let dr = -1; dr <= 1; dr++) {
             for (let dc = -1; dc <= 1; dc++) {
               const nr = pt.r + dr;
@@ -709,7 +840,6 @@ class VibeCrushGame {
       const points = toClear.size * 50 * this.comboCount;
       this.addScore(points);
 
-      // Add Career XP!
       this.careerXP += points;
       localStorage.setItem("vibecrush_xp", this.careerXP);
       this.updateCareerUI();
@@ -767,10 +897,37 @@ class VibeCrushGame {
       await this.applyGravity();
       this.renderBoard();
 
+      // Animate newly spawned powerups
+      newSpecials.forEach((sp) => {
+        const powerEl = this.boardEl.querySelector(`[data-row='${sp.r}'][data-col='${sp.c}'] .tile`);
+        if (powerEl) powerEl.classList.add("special-spawn");
+      });
+
       matches = this.findMatches();
     }
 
     this.hideComboBadge();
+  }
+
+  showShockwave(r, c) {
+    const ring = document.createElement("div");
+    ring.className = "shockwave-ring";
+    ring.style.top = `calc(var(--tile-size) * ${r} + var(--tile-size) / 2)`;
+    ring.style.left = `calc(var(--tile-size) * ${c} + var(--tile-size) / 2)`;
+    this.boardEl.parentElement.appendChild(ring);
+    setTimeout(() => ring.remove(), 420);
+  }
+
+  triggerAnnouncer(text, type = "sweet") {
+    window.audio.playAnnounce(type);
+    const existing = document.querySelector(".announcer-banner");
+    if (existing) existing.remove();
+
+    const banner = document.createElement("div");
+    banner.className = "announcer-banner";
+    banner.textContent = text;
+    this.boardEl.parentElement.appendChild(banner);
+    setTimeout(() => banner.remove(), 850);
   }
 
   async triggerRainbowSwap(r1, c1, r2, c2) {
@@ -778,6 +935,7 @@ class VibeCrushGame {
     const targetCell = this.board[r1][c1].special === "rainbow" ? this.board[r2][c2] : this.board[r1][c1];
     const targetId = targetCell.type.id;
 
+    this.triggerAnnouncer("SUPERNOVA! ★", "tasty");
     window.audio.playRainbow();
     this.shakeBoard();
 
@@ -945,7 +1103,6 @@ class VibeCrushGame {
     this.stopTimer();
     window.audio.playVictory();
 
-    // Reward extra boosters on clearing stages
     this.boosters.hammer = Math.min(5, this.boosters.hammer + 1);
     this.saveBoosters();
     this.updateBoosterUI();
@@ -988,7 +1145,8 @@ class VibeCrushGame {
     document.getElementById("winMovesLeft").textContent = this.currentMode === "saga" ? this.movesLeft : `${this.timeLeft}s left`;
     document.getElementById("winStars").innerHTML = "★".repeat(stars) + "☆".repeat(3 - stars);
 
-    const tweetText = `Just crushed ${this.currentStage ? this.currentStage.title : "Vibe Crush"} with ${this.score.toLocaleString()} points (${stars}★)! 🎮⚡\n\nRank: ${this.rankNameEl.textContent} | Raiding the testnet with @vibevibefun. Can your team beat my score?\n\nhttps://ayoola-tech2024.github.io/vibe-crush/`;
+    const callSign = this.playerNickname ? `[${this.playerNickname}] ` : "";
+    const tweetText = `${callSign}Just crushed ${this.currentStage ? this.currentStage.title : "Vibe Crush"} with ${this.score.toLocaleString()} points (${stars}★)! 🎮⚡\n\nRank: ${this.rankNameEl.textContent} | Raiding the testnet with @vibevibefun. Can your team beat my score?\n\nhttps://ayoola-tech2024.github.io/vibe-crush/`;
     document.getElementById("btnShareWin").href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
     const nextBtn = document.getElementById("btnNextLevel");
@@ -1027,6 +1185,26 @@ class VibeCrushGame {
 // Global initialization
 window.addEventListener("DOMContentLoaded", () => {
   window.game = new VibeCrushGame();
+
+  // Nickname Submit
+  document.getElementById("btnSubmitNickname").onclick = () => {
+    const val = document.getElementById("inputNickname").value;
+    window.game.setNickname(val);
+  };
+  document.getElementById("inputNickname").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const val = document.getElementById("inputNickname").value;
+      window.game.setNickname(val);
+    }
+  });
+
+  // Tutorial Modal Controls
+  document.getElementById("btnTutorial").onclick = () => {
+    document.getElementById("modalTutorial").classList.add("active");
+  };
+  document.getElementById("btnCloseTutorial").onclick = () => {
+    document.getElementById("modalTutorial").classList.remove("active");
+  };
 
   // Mode Selection Tabs
   document.querySelectorAll(".mode-tab").forEach(tab => {
@@ -1091,7 +1269,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Saga Map & Gallery Modals
+  // Saga Map Modal
   const mapModal = document.getElementById("modalSagaMap");
   document.getElementById("btnSagaMap").onclick = () => {
     const grid = document.getElementById("sagaMapGrid");

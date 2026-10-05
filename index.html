@@ -23,6 +23,7 @@
           </div>
         </div>
         <div class="header-controls">
+          <button id="btnTutorial" class="btn-icon" title="How to Play / Tutorial">❓</button>
           <button id="btnSagaMap" class="btn-icon" title="Saga Map / Stages">🗺️</button>
           <button id="btnGallery" class="btn-icon" title="PFP Trophy Vault">🏆</button>
           <button id="btnMute" class="btn-icon" title="Toggle Sound / BGM">🔊</button>
@@ -33,7 +34,7 @@
       <!-- Career Rank & Total XP Bar -->
       <div class="career-bar">
         <div class="rank-badge">
-          <span>🎖️</span> <span id="rankName">Novice Raider</span>
+          <span>🎖️</span> <span id="playerNickname">Raider</span> • <span id="rankName">Novice Raider</span>
         </div>
         <div class="career-stats">
           <span>Career: <b id="xpValue">0 XP</b></span>
@@ -123,6 +124,77 @@
     </div>
   </div>
 
+  <!-- Welcome / Nickname Modal -->
+  <div id="modalNickname" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header success">
+        <h2>Enter The Raid ⚡</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Join the @vibevibefun community match-3 bounty.</p>
+      </div>
+
+      <div class="nickname-input-group">
+        <label for="inputNickname">Choose Your Raider Call-sign</label>
+        <input type="text" id="inputNickname" class="nickname-input" placeholder="e.g. VibeHunter99" maxlength="15" autocomplete="off" />
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnSubmitNickname" class="btn-primary" style="justify-content: center; width: 100%;">
+          Start Raiding ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to Play / Tutorial Modal -->
+  <div id="modalTutorial" class="modal-overlay">
+    <div class="modal-card" style="max-width: 420px;">
+      <div class="modal-header">
+        <h2>How to Play Vibe Crush 🎮</h2>
+        <p style="color: var(--text-muted); font-size: 0.8rem;">Master special matches and crush the FUD!</p>
+      </div>
+
+      <div class="tutorial-slide">
+        <div class="tutorial-item">
+          <div class="tutorial-icon">↔</div>
+          <div class="tutorial-text">
+            <h4>Match 4 = Laser Beam Viber</h4>
+            <p>Matching 4 tiles creates a row or column blaster. Match it again or tap to detonate a full line!</p>
+          </div>
+        </div>
+
+        <div class="tutorial-item">
+          <div class="tutorial-icon">💥</div>
+          <div class="tutorial-text">
+            <h4>T or L Shape = Shockwave Bomb</h4>
+            <p>Explodes a 3×3 area around it with massive bonus points and screen shake.</p>
+          </div>
+        </div>
+
+        <div class="tutorial-item">
+          <div class="tutorial-icon">★</div>
+          <div class="tutorial-text">
+            <h4>Match 5 = Rainbow Super Viber</h4>
+            <p>Swap with ANY Viber to obliterate every single tile of that color from the entire board!</p>
+          </div>
+        </div>
+
+        <div class="tutorial-item">
+          <div class="tutorial-icon">❄</div>
+          <div class="tutorial-text">
+            <h4>Break the FUD Ice</h4>
+            <p>Make adjacent matches or use your Laser Hammer to shatter frozen ice blocks before moves expire.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnCloseTutorial" class="btn-primary" style="justify-content: center; width: 100%;">
+          Got It, Let's Play! ⚡
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Win Modal -->
   <div id="modalWin" class="modal-overlay">
     <div class="modal-card">
@@ -190,7 +262,7 @@
 
   <!-- Saga Map Modal -->
   <div id="modalSagaMap" class="modal-overlay">
-    <div class="modal-card">
+    <div class="modal-card" style="max-width: 440px;">
       <div class="modal-header">
         <h2>Saga World Map</h2>
         <p style="color: var(--text-muted); font-size: 0.8rem;">Select any unlocked stage to replay.</p>
@@ -210,7 +282,7 @@
 
   <!-- PFP Gallery / Trophy Modal -->
   <div id="modalGallery" class="modal-overlay">
-    <div class="modal-card">
+    <div class="modal-card" style="max-width: 440px;">
       <div class="modal-header">
         <h2>Raider PFP Vault</h2>
         <p style="color: var(--text-muted); font-size: 0.8rem;">Unlock and download exclusive Viber portraits.</p>
