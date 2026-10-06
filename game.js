@@ -322,65 +322,107 @@ class VibeCrushGame {
   }
 
   renderBoard() {
-    this.boardEl.innerHTML = "";
+    // Initialize static 8x8 slot DOM elements once if not already present
+    if (this.boardEl.children.length !== GRID_SIZE * GRID_SIZE) {
+      this.boardEl.innerHTML = "";
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          const slot = document.createElement("div");
+          slot.className = "tile-slot";
+          slot.dataset.row = r;
+          slot.dataset.col = c;
+          this.boardEl.appendChild(slot);
+        }
+      }
+    }
+
+    // Update each slot smoothly without destroying the DOM tree
     for (let r = 0; r < GRID_SIZE; r++) {
       for (let c = 0; c < GRID_SIZE; c++) {
-        const slot = document.createElement("div");
-        slot.className = "tile-slot";
-        slot.dataset.row = r;
-        slot.dataset.col = c;
-
+        const slot = this.boardEl.children[r * GRID_SIZE + c];
         const cell = this.board[r][c];
-        if (cell && cell.type) {
-          const tile = document.createElement("div");
+
+        if (!cell || !cell.type) {
+          slot.innerHTML = "";
+          continue;
+        }
+
+        let tile = slot.querySelector(".tile");
+        const isNewTile = !tile;
+
+        if (isNewTile) {
+          tile = document.createElement("div");
           tile.className = "tile";
           tile.dataset.row = r;
           tile.dataset.col = c;
-          tile.style.backgroundImage = `url('${cell.type.img}')`;
-          tile.style.backgroundColor = cell.type.color;
-
-          if (this.selectedTile && this.selectedTile.r === r && this.selectedTile.c === c) {
-            tile.classList.add("selected");
+          if (cell.isNewDrop) {
+            tile.classList.add("tile-drop");
+            cell.isNewDrop = false;
           }
+          slot.innerHTML = "";
+          slot.appendChild(tile);
+        } else {
+          tile.dataset.row = r;
+          tile.dataset.col = c;
+          tile.className = "tile";
+        }
 
-          if (this.activeBooster === "hammer") {
-            tile.classList.add("hammer-target");
-          }
+        tile.style.backgroundImage = `url('${cell.type.img}')`;
+        tile.style.backgroundColor = cell.type.color;
 
-          if (this.currentHint && (
-            (this.currentHint.r1 === r && this.currentHint.c1 === c) ||
-            (this.currentHint.r2 === r && this.currentHint.c2 === c)
-          )) {
-            tile.classList.add("hint-pulse");
-          }
+        if (this.selectedTile && this.selectedTile.r === r && this.selectedTile.c === c) {
+          tile.classList.add("selected");
+        }
 
-          if (cell.special === "laser_h" || cell.special === "laser_v") {
-            const badge = document.createElement("div");
-            badge.className = "power-badge power-line";
-            badge.textContent = cell.special === "laser_h" ? "↔" : "↕";
+        if (this.activeBooster === "hammer") {
+          tile.classList.add("hammer-target");
+        }
+
+        if (this.currentHint && (
+          (this.currentHint.r1 === r && this.currentHint.c1 === c) ||
+          (this.currentHint.r2 === r && this.currentHint.c2 === c)
+        )) {
+          tile.classList.add("hint-pulse");
+        }
+
+        // Special tile decorations
+        let badge = tile.querySelector(".power-badge");
+        if (cell.special === "laser_h" || cell.special === "laser_v") {
+          if (!badge) {
+            badge = document.createElement("div");
             tile.appendChild(badge);
-          } else if (cell.special === "bomb") {
-            const badge = document.createElement("div");
-            badge.className = "power-badge power-bomb";
-            badge.textContent = "💥";
-            tile.appendChild(badge);
-          } else if (cell.special === "rainbow") {
-            const badge = document.createElement("div");
-            badge.className = "power-badge power-rainbow";
-            badge.textContent = "★";
+          }
+          badge.className = "power-badge power-line";
+          badge.textContent = cell.special === "laser_h" ? "↔" : "↕";
+        } else if (cell.special === "bomb") {
+          if (!badge) {
+            badge = document.createElement("div");
             tile.appendChild(badge);
           }
+          badge.className = "power-badge power-bomb";
+          badge.textContent = "💥";
+        } else if (cell.special === "rainbow") {
+          if (!badge) {
+            badge = document.createElement("div");
+            tile.appendChild(badge);
+          }
+          badge.className = "power-badge power-rainbow";
+          badge.textContent = "★";
+        } else if (badge) {
+          badge.remove();
+        }
 
-          if (cell.ice) {
-            const ice = document.createElement("div");
+        // Ice Block overlay
+        let ice = slot.querySelector(".ice-overlay");
+        if (cell.ice) {
+          if (!ice) {
+            ice = document.createElement("div");
             ice.className = "ice-overlay";
             slot.appendChild(ice);
           }
-
-          slot.appendChild(tile);
+        } else if (ice) {
+          ice.remove();
         }
-
-        this.boardEl.appendChild(slot);
       }
     }
   }
@@ -979,7 +1021,8 @@ class VibeCrushGame {
         this.board[r][c] = {
           type: candidate,
           special: null,
-          ice: false
+          ice: false,
+          isNewDrop: true
         };
       }
     }
