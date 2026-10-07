@@ -3,45 +3,172 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Vibe Crush — Match-3 Saga for @vibevibefun</title>
+  <title>Vibe Crush — Lagos Street Saga for @vibevibefun</title>
   <link rel="icon" href="assets/vibers/viber1.webp" type="image/webp" />
+  <!-- Google Fonts: Fredoka (tactile rounded arcade) & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <!-- Fullscreen Particle Effects Canvas -->
   <canvas id="particlesCanvas"></canvas>
 
-  <div class="app-container">
-    <div class="top-section">
-      <!-- Header -->
-      <header class="game-header">
-        <div class="brand-badge">
-          <div class="brand-logo">⚡</div>
-          <div class="brand-text">
-            <h1>VIBE CRUSH</h1>
-            <span>FOR RAIDERS @VIBEVIBEFUN</span>
+  <!-- Animated Lagos Sunset & Highway Skyline Environment -->
+  <div class="lagos-skyline-bg" aria-hidden="true">
+    <div class="sky-sunset"></div>
+    <div class="sky-wires">
+      <svg class="wire-svg" viewBox="0 0 1000 140" preserveAspectRatio="none">
+        <path d="M 0 35 Q 260 95 520 40 Q 760 100 1000 35" stroke="rgba(24, 24, 27, 0.45)" stroke-width="2.5" fill="none"/>
+        <path d="M 0 55 Q 280 115 540 60 Q 780 118 1000 55" stroke="rgba(24, 24, 27, 0.35)" stroke-width="2" fill="none"/>
+        <path d="M 0 75 Q 310 130 560 80 Q 800 135 1000 75" stroke="rgba(24, 24, 27, 0.25)" stroke-width="1.5" fill="none"/>
+      </svg>
+      <div class="telegraph-pole pole-left">
+        <div class="pole-crossbar"></div>
+      </div>
+      <div class="telegraph-pole pole-right">
+        <div class="pole-crossbar"></div>
+      </div>
+    </div>
+    <div class="highway-scene">
+      <div class="danfo-highway-line"></div>
+      <div class="mini-danfo-runner">
+        <div class="mini-danfo">
+          <div class="m-roof-rack">
+            <div class="m-blue-drum"></div>
+            <div class="m-cargo-box"></div>
+          </div>
+          <div class="m-bus-body">
+            <div class="m-windshield"></div>
+            <div class="m-stripes"></div>
+            <div class="m-wheel w-1"></div>
+            <div class="m-wheel w-2"></div>
           </div>
         </div>
-        <div class="header-controls">
-          <button id="btnTutorial" class="btn-icon" title="How to Play / Tutorial">❓</button>
-          <button id="btnSagaMap" class="btn-icon" title="Saga Map / Stages">🗺️</button>
-          <button id="btnGallery" class="btn-icon" title="PFP Trophy Vault">🏆</button>
-          <button id="btnMute" class="btn-icon" title="Toggle Sound / BGM">🔊</button>
-          <button id="btnRestart" class="btn-icon" title="Restart Stage">↺</button>
-        </div>
-      </header>
+      </div>
+    </div>
+  </div>
 
-      <!-- Career Rank & Total XP Bar -->
-      <div class="career-bar">
-        <div class="rank-badge">
-          <span>🎖️</span> <span id="playerNickname">Raider</span> • <span id="rankName">Novice Raider</span>
+  <div class="app-container">
+    <!-- Top Tactical Section -->
+    <div class="top-section">
+      <!-- Upper Status Bar (Danfo Run Style) -->
+      <div class="danfo-topbar">
+        <div class="topbar-left">
+          <div class="tactile-pill fuel-pill" title="Player Energy / Fuel">
+            <span class="pill-icon">💧</span>
+            <span id="fuelValue">100</span>
+          </div>
+          <div class="tactile-pill coin-pill" title="Lagos Coins / Tokens">
+            <span class="pill-icon">🪙</span>
+            <span id="coinsValue">450</span>
+          </div>
         </div>
-        <div class="career-stats">
-          <span>Career: <b id="xpValue">0 XP</b></span>
+
+        <!-- Live Interactive Lagos Radio Pill -->
+        <button id="radioStationPill" class="tactile-pill radio-pill" title="Tap to switch Lagos radio station">
+          <span class="radio-anim">🎵</span>
+          <span class="radio-badge">MIX</span>
+          <span id="stationNameDisplay">Ojuelegba FM</span>
+          <span class="radio-arrow">❯</span>
+        </button>
+
+        <div class="topbar-right">
+          <button id="btnTutorial" class="tactile-icon-btn" title="How to Play / Rules">❓</button>
+          <button id="btnSagaMap" class="tactile-icon-btn" title="Saga World Map">🗺️</button>
+          <button id="btnGallery" class="tactile-icon-btn" title="Viber Vault / Trophies">🏆</button>
+          <button id="btnMute" class="tactile-icon-btn" title="Toggle Sound / BGM">🔊</button>
+          <button id="btnRestart" class="tactile-icon-btn" title="Restart Stage">↺</button>
         </div>
       </div>
 
-      <!-- Mode Selector Tabs -->
+      <!-- Tactile Card Dashboard Grid (Lagos Island, Stamps, Market Day) -->
+      <div class="danfo-dashboard-grid">
+        <!-- Left Column: Best Score & Stamp Card -->
+        <div class="dash-col dash-col-left">
+          <div class="tactile-card best-score-card">
+            <div class="star-icon-3d">⭐</div>
+            <div class="best-meta">
+              <span class="best-title">Best</span>
+              <span id="bestScoreVal" class="best-num">0</span>
+            </div>
+          </div>
+
+          <!-- Transit Stamp Card (Exact Danfo Run Ticket Feature) -->
+          <div class="tactile-card ticket-stamp-card" id="btnOpenTicketCard">
+            <div class="ticket-header">
+              <span class="ticket-icon">🎟️</span>
+              <span id="stampAreaName" class="ticket-route-name">Lagos Island</span>
+            </div>
+            <div class="ticket-sub">
+              <span id="stampText">0/9 stamps</span>
+            </div>
+            <div id="stampSlotsContainer" class="ticket-stamp-slots">
+              <span class="stamp-hole"></span>
+              <span class="stamp-hole"></span>
+              <span class="stamp-hole"></span>
+              <span class="stamp-hole"></span>
+              <span class="stamp-hole"></span>
+              <span class="stamp-hole"></span>
+              <span class="stamp-hole"></span>
+              <span class="stamp-hole"></span>
+              <span class="stamp-hole"></span>
+            </div>
+          </div>
+
+          <!-- Tokunbo Reward Card -->
+          <div class="tactile-card tokunbo-reward-card" id="btnTokunboReward">
+            <div class="reward-van-icon">🚕</div>
+            <div class="reward-text">
+              <span class="reward-subtitle">Free with sign-in</span>
+              <span class="reward-title">Tokunbo Fresh</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Market Day & Leaderboard -->
+        <div class="dash-col dash-col-right">
+          <!-- Daily Market Special Badge -->
+          <div class="tactile-card market-event-card">
+            <div class="market-badge-head">
+              <span class="market-tag-pill">Today</span>
+              <span class="market-icon-basket">🧺</span>
+            </div>
+            <div class="market-headline">Market Tuesday</div>
+            <div class="market-time-left">
+              <span>⏱</span> <span id="eventBannerTimer">16h 33m</span>
+            </div>
+          </div>
+
+          <!-- Leaders Button -->
+          <button id="btnOpenLeaders" class="tactile-card leaders-card-btn">
+            <div class="trophy-gold-3d">🏆</div>
+            <div class="leaders-meta">
+              <span class="leaders-tag">Leaders</span>
+              <span class="leaders-cta">See all</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Route Selector Banner (Chunky Green Pill with Navigation Arrows) -->
+      <div class="route-selector-banner">
+        <button id="btnPrevRoute" class="route-arrow-btn" title="Previous Area">❮</button>
+        <div class="route-center-card" id="btnRouteDetail">
+          <div class="route-stop-icon">🚏</div>
+          <div class="route-text-content">
+            <div class="route-area-badge">
+              <span id="routeAreaTag">Area 1</span>
+            </div>
+            <div id="routeTitle" class="route-main-title">Ojuelegba - Yaba</div>
+            <div id="routeSub" class="route-sub-target">Score: 0 / 1,200</div>
+          </div>
+        </div>
+        <button id="btnNextRoute" class="route-arrow-btn" title="Next Area">❯</button>
+      </div>
+
+      <!-- Mode Selector Tabs (Saga, 60s Rush, Zen) -->
       <div class="mode-tabs">
         <div class="mode-tab active" data-mode="saga">🌟 Saga</div>
         <div class="mode-tab" data-mode="time_rush">⏱ 60s Rush</div>
@@ -50,19 +177,19 @@
 
       <!-- Difficulty Selector -->
       <div class="diff-selector">
-        <span>Difficulty</span>
+        <span>Road Traffic</span>
         <div class="diff-pills">
-          <div class="diff-pill" data-diff="easy">Chill</div>
+          <div class="diff-pill" data-diff="easy">Clear</div>
           <div class="diff-pill active" data-diff="normal">Standard</div>
-          <div class="diff-pill" data-diff="hard">Hard 🔥</div>
+          <div class="diff-pill" data-diff="hard">Go-Slow 🔥</div>
         </div>
       </div>
 
-      <!-- Score & Move HUD -->
+      <!-- Active Game HUD (Score, Target, Moves, Stage) -->
       <div class="hud-panel">
         <div class="hud-item">
-          <div class="hud-label">Stage</div>
-          <div id="levelBadge" class="hud-value highlight">S1</div>
+          <div class="hud-label">Area</div>
+          <div id="levelBadge" class="hud-value highlight">A1</div>
         </div>
         <div class="hud-item">
           <div class="hud-label">Score</div>
@@ -89,7 +216,7 @@
         <div id="comboBadge" class="combo-badge">2x FRENZY!</div>
       </div>
 
-      <!-- In-Game Power Booster Bar -->
+      <!-- In-Game Power Booster Bar (Chunky 3D Neubrutalist Buttons) -->
       <div class="boosters-bar">
         <button id="btnBoosterHammer" class="btn-booster" title="Pick an obstacle or tile to smash">
           <span>🔨 Hammer</span>
@@ -113,32 +240,113 @@
       </div>
     </div>
 
+    <!-- Big Playful Call To Action -->
+    <div class="tap-to-play-text">
+      <span>Tap to crush</span>
+    </div>
+
+    <!-- Career Rank & Total XP Bar -->
+    <div class="career-bar">
+      <div class="rank-badge">
+        <span>🎖️</span> <span id="playerNickname">Raider</span> • <span id="rankName">Novice Raider</span>
+      </div>
+      <div class="career-stats">
+        <span>Career: <b id="xpValue">0 XP</b></span>
+      </div>
+    </div>
+
     <!-- Bottom Controls -->
     <div class="bottom-controls">
       <button class="btn-secondary" onclick="window.open('https://testnet.vibevibe.fun/vibe-vibers/for-raiders', '_blank')">
         <span>🌐</span> Raiders
       </button>
-      <a id="btnShareCommunity" class="btn-primary" target="_blank" href="https://twitter.com/intent/tweet?text=Raid%20the%20testnet%20with%20me%20on%20Vibe%20Crush!%20%F0%9F%8E%AE%E2%9A%A1%20%40vibevibefun%20%23VibeCrush&url=https%3A%2F%2Fayoola-tech2024.github.io%2Fvibe-crush%2F">
+      <a id="btnShareCommunity" class="btn-primary" target="_blank" href="https://twitter.com/intent/tweet?text=Raid%20the%20Lagos%20streets%20with%20me%20on%20Vibe%20Crush!%20%F0%9F%8E%AE%E2%9A%A1%20%40vibevibefun%20%23VibeCrush&url=https%3A%2F%2Fayoola-tech2024.github.io%2Fvibe-crush%2F">
         <span>🐦</span> Share on X
       </a>
     </div>
   </div>
 
+  <!-- Area / Ticket Modal (Styled EXACTLY like media_1791370232611.jpg) -->
+  <div id="modalAreaDetail" class="modal-overlay">
+    <div class="modal-card danfo-sheet">
+      <!-- Top Scenic Banner with Lock and Area Pill -->
+      <div class="scenic-banner">
+        <div class="scenic-area-pill" id="modalAreaPill">Area 1</div>
+        <button id="btnCloseAreaModal" class="circle-close-btn" title="Close">✕</button>
+        <div class="scenic-city-art">
+          <div class="city-sky"></div>
+          <div class="city-bridge"></div>
+          <div class="city-lock-badge">
+            <span id="modalAreaLockIcon">🔒</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div class="danfo-sheet-content">
+        <h2 id="modalAreaTitle" class="sheet-title">Ojuelegba Hub</h2>
+        <div class="sheet-stamp-sub">
+          Fill your ticket: <span id="modalStampCount">0 of 9 stamps</span>
+        </div>
+
+        <div id="modalStampSlots" class="sheet-stamp-holes">
+          <span class="sheet-hole"></span>
+          <span class="sheet-hole"></span>
+          <span class="sheet-hole"></span>
+          <span class="sheet-hole"></span>
+          <span class="sheet-hole"></span>
+          <span class="sheet-hole"></span>
+          <span class="sheet-hole"></span>
+          <span class="sheet-hole"></span>
+          <span class="sheet-hole"></span>
+        </div>
+
+        <!-- Big Chunky Yellow Button -->
+        <button id="btnStartRoute" class="btn-danfo-cta">
+          Get stamps on Route
+        </button>
+
+        <div class="sheet-divider">
+          <span>or</span>
+        </div>
+
+        <div class="hurry-tag">
+          In a hurry? Sign in and raid am now
+        </div>
+
+        <!-- Social Single-Tap Google Sign-in Pill -->
+        <button id="btnGoogleSignin" class="btn-google-pill">
+          <svg class="google-icon" viewBox="0 0 24 24" width="18" height="18">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span id="googleBtnText">Continue with Google</span>
+        </button>
+
+        <p class="sheet-trust-caption">
+          Your scores and unlocked vibers stay saved on every phone
+        </p>
+      </div>
+    </div>
+  </div>
+
   <!-- Welcome / Nickname Modal -->
   <div id="modalNickname" class="modal-overlay">
-    <div class="modal-card">
+    <div class="modal-card danfo-sheet">
       <div class="modal-header success">
-        <h2>Enter The Raid ⚡</h2>
-        <p style="color: var(--text-muted); font-size: 0.85rem;">Join the @vibevibefun community match-3 bounty.</p>
+        <h2>Enter The Lagos Raid ⚡</h2>
+        <p style="color: #4b5563; font-size: 0.88rem; font-weight: 600;">Join the @vibevibefun community match-3 bounty.</p>
       </div>
 
       <div class="nickname-input-group">
-        <label for="inputNickname">Choose Your Raider Call-sign</label>
-        <input type="text" id="inputNickname" class="nickname-input" placeholder="e.g. VibeHunter99" maxlength="15" autocomplete="off" />
+        <label for="inputNickname" style="font-weight: 800; color: #18181b;">Choose Your Raider Call-sign</label>
+        <input type="text" id="inputNickname" class="nickname-input" placeholder="e.g. LagosConductor" maxlength="15" autocomplete="off" />
       </div>
 
       <div class="modal-actions">
-        <button id="btnSubmitNickname" class="btn-primary" style="justify-content: center; width: 100%;">
+        <button id="btnSubmitNickname" class="btn-danfo-cta" style="justify-content: center; width: 100%;">
           Start Raiding ➔
         </button>
       </div>
@@ -147,10 +355,10 @@
 
   <!-- How to Play / Tutorial Modal -->
   <div id="modalTutorial" class="modal-overlay">
-    <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-card danfo-sheet" style="max-width: 420px;">
       <div class="modal-header">
-        <h2>How to Play Vibe Crush 🎮</h2>
-        <p style="color: var(--text-muted); font-size: 0.8rem;">Master special matches and crush the FUD!</p>
+        <h2>How to Raid Lagos 🎮</h2>
+        <p style="color: #4b5563; font-size: 0.85rem; font-weight: 600;">Match special tokens, punch ticket stamps & beat traffic!</p>
       </div>
 
       <div class="tutorial-slide">
@@ -158,7 +366,7 @@
           <div class="tutorial-icon">↔</div>
           <div class="tutorial-text">
             <h4>Match 4 = Laser Beam Viber</h4>
-            <p>Matching 4 tiles creates a row or column blaster. Match it again or tap to detonate a full line!</p>
+            <p>Matching 4 tokens creates a full row or column blaster. Match again to clear an entire highway lane!</p>
           </div>
         </div>
 
@@ -166,29 +374,29 @@
           <div class="tutorial-icon">💥</div>
           <div class="tutorial-text">
             <h4>T or L Shape = Shockwave Bomb</h4>
-            <p>Explodes a 3×3 area around it with massive bonus points and screen shake.</p>
+            <p>Explodes a 3×3 traffic jam with massive bonus points, coin drops, and screen shake.</p>
           </div>
         </div>
 
         <div class="tutorial-item">
           <div class="tutorial-icon">★</div>
           <div class="tutorial-text">
-            <h4>Match 5 = Rainbow Super Viber</h4>
-            <p>Swap with ANY Viber to obliterate every single tile of that color from the entire board!</p>
+            <h4>Match 5 = Rainbow Super Token</h4>
+            <p>Swap with ANY token to obliterate every single matching color from the entire board!</p>
           </div>
         </div>
 
         <div class="tutorial-item">
-          <div class="tutorial-icon">❄</div>
+          <div class="tutorial-icon">🎟️</div>
           <div class="tutorial-text">
-            <h4>Break the FUD Ice</h4>
-            <p>Make adjacent matches or use your Laser Hammer to shatter frozen ice blocks before moves expire.</p>
+            <h4>Collect 9 Stamps to Clear the Route</h4>
+            <p>Score points and trigger combos to punch all 9 stamp holes on your transit card!</p>
           </div>
         </div>
       </div>
 
       <div class="modal-actions">
-        <button id="btnCloseTutorial" class="btn-primary" style="justify-content: center; width: 100%;">
+        <button id="btnCloseTutorial" class="btn-danfo-cta" style="justify-content: center; width: 100%;">
           Got It, Let's Play! ⚡
         </button>
       </div>
@@ -197,10 +405,10 @@
 
   <!-- Win Modal -->
   <div id="modalWin" class="modal-overlay">
-    <div class="modal-card">
+    <div class="modal-card danfo-sheet">
       <div class="modal-header success">
-        <h2 id="winLevelTitle">Stage Cleared!</h2>
-        <p style="color: var(--text-muted); font-size: 0.82rem;">You crushed the FUD and boosted the vibe!</p>
+        <h2 id="winLevelTitle">Route Cleared!</h2>
+        <p style="color: #15803d; font-size: 0.9rem; font-weight: 700;">You punched all 9 stamps and conquered the road!</p>
       </div>
       <div id="winStars" class="modal-stars">★★★</div>
       
@@ -216,9 +424,9 @@
       </div>
 
       <div class="unlocked-pfp">
-        <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--accent-purple); font-weight: 700;">✨ New Raider PFP Unlocked!</span>
+        <span style="font-size: 0.76rem; text-transform: uppercase; color: #7c3aed; font-weight: 800;">✨ New Raider PFP Unlocked!</span>
         <img id="winRewardImg" class="pfp-preview" src="" alt="Unlocked Viber" />
-        <span id="winRewardName" style="font-size: 0.82rem; font-weight: 700; margin-bottom: 4px;">Raider</span>
+        <span id="winRewardName" style="font-size: 0.9rem; font-weight: 800; margin-bottom: 4px; color: #18181b;">Raider</span>
         <a id="btnDownloadReward" class="btn-download-pfp" href="#" download="viber_pfp.webp">⬇ Download PFP</a>
       </div>
 
@@ -226,8 +434,8 @@
         <a id="btnShareWin" class="btn-share-x" target="_blank" href="#">
           <span>🐦</span> Share Victory to X (@vibevibefun)
         </a>
-        <button id="btnNextLevel" class="btn-primary" style="justify-content: center; width: 100%;">
-          Next Stage ➔
+        <button id="btnNextLevel" class="btn-danfo-cta" style="justify-content: center; width: 100%;">
+          Next Route ➔
         </button>
       </div>
     </div>
@@ -235,10 +443,10 @@
 
   <!-- Game Over / Retry Modal -->
   <div id="modalFail" class="modal-overlay">
-    <div class="modal-card">
+    <div class="modal-card danfo-sheet">
       <div class="modal-header fail">
-        <h2>Stage Failed!</h2>
-        <p style="color: var(--text-muted); font-size: 0.82rem;">The FUD crept in before reaching the target.</p>
+        <h2>Go-Slow Jammed!</h2>
+        <p style="color: #b91c1c; font-size: 0.9rem; font-weight: 700;">Moves ran out before filling the ticket.</p>
       </div>
 
       <div class="modal-stats">
@@ -253,7 +461,7 @@
       </div>
 
       <div class="modal-actions">
-        <button id="btnRetryLevel" class="btn-primary" style="justify-content: center; width: 100%;">
+        <button id="btnRetryLevel" class="btn-danfo-cta" style="justify-content: center; width: 100%;">
           Try Again ↺
         </button>
       </div>
@@ -262,10 +470,10 @@
 
   <!-- Saga Map Modal -->
   <div id="modalSagaMap" class="modal-overlay">
-    <div class="modal-card" style="max-width: 440px;">
+    <div class="modal-card danfo-sheet" style="max-width: 440px;">
       <div class="modal-header">
-        <h2>Saga World Map</h2>
-        <p style="color: var(--text-muted); font-size: 0.8rem;">Select any unlocked stage to replay.</p>
+        <h2>Lagos Transit Map 🗺️</h2>
+        <p style="color: #4b5563; font-size: 0.85rem; font-weight: 600;">Select any unlocked Lagos route to drive.</p>
       </div>
 
       <div id="sagaMapGrid" class="saga-map-grid">
@@ -273,7 +481,7 @@
       </div>
 
       <div class="modal-actions">
-        <button id="btnCloseMap" class="btn-secondary" style="justify-content: center; width: 100%;">
+        <button id="btnCloseMap" class="btn-danfo-cta" style="background: #e2e8f0; color: #18181b; justify-content: center; width: 100%;">
           Back to Game
         </button>
       </div>
@@ -282,10 +490,10 @@
 
   <!-- PFP Gallery / Trophy Modal -->
   <div id="modalGallery" class="modal-overlay">
-    <div class="modal-card" style="max-width: 440px;">
+    <div class="modal-card danfo-sheet" style="max-width: 440px;">
       <div class="modal-header">
-        <h2>Raider PFP Vault</h2>
-        <p style="color: var(--text-muted); font-size: 0.8rem;">Unlock and download exclusive Viber portraits.</p>
+        <h2>Raider Viber Vault 🏆</h2>
+        <p style="color: #4b5563; font-size: 0.85rem; font-weight: 600;">Unlock and download exclusive Lagos Viber characters.</p>
       </div>
 
       <div id="galleryGrid" class="gallery-grid">
@@ -293,7 +501,7 @@
       </div>
 
       <div class="modal-actions">
-        <button id="btnCloseGallery" class="btn-secondary" style="justify-content: center; width: 100%;">
+        <button id="btnCloseGallery" class="btn-danfo-cta" style="background: #e2e8f0; color: #18181b; justify-content: center; width: 100%;">
           Back to Game
         </button>
       </div>

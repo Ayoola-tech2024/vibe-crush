@@ -4,26 +4,26 @@
 const GRID_SIZE = 8;
 
 const VIBERS = [
-  { id: 1, name: "Mint Antenna", color: "#00F5D4", img: "assets/vibers/viber1.webp" },
-  { id: 2, name: "Cap Blue", color: "#3B82F6", img: "assets/vibers/viber2.webp" },
-  { id: 3, name: "Peach Chest", color: "#FB7185", img: "assets/vibers/viber3.webp" },
-  { id: 4, name: "Visor Slate", color: "#F59E0B", img: "assets/vibers/viber4.webp" },
-  { id: 5, name: "Crown Lavender", color: "#A855F7", img: "assets/vibers/viber5.webp" },
-  { id: 6, name: "Gold Ears", color: "#EAB308", img: "assets/vibers/viber6.webp" },
-  { id: 7, name: "Ice Cap", color: "#06B6D4", img: "assets/vibers/viber7.webp" }
+  { id: 1, name: "Danfo Gold", color: "#FFB800", gradient: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", icon: "🚕", img: "assets/vibers/viber1.webp" },
+  { id: 2, name: "Marina Blue", color: "#0284C7", gradient: "linear-gradient(135deg, #38BDF8 0%, #0284C7 100%)", icon: "⚡", img: "assets/vibers/viber2.webp" },
+  { id: 3, name: "Ojuelegba Sunset", color: "#E11D48", gradient: "linear-gradient(135deg, #FB7185 0%, #E11D48 100%)", icon: "🌶️", img: "assets/vibers/viber3.webp" },
+  { id: 4, name: "Market Spice", color: "#F97316", gradient: "linear-gradient(135deg, #FDBA74 0%, #EA580C 100%)", icon: "🧺", img: "assets/vibers/viber4.webp" },
+  { id: 5, name: "Lagos Crown", color: "#8B5CF6", gradient: "linear-gradient(135deg, #C084FC 0%, #7C3AED 100%)", icon: "👑", img: "assets/vibers/viber5.webp" },
+  { id: 6, name: "Lucky Star", color: "#EAB308", gradient: "linear-gradient(135deg, #FDE047 0%, #CA8A04 100%)", icon: "⭐", img: "assets/vibers/viber6.webp" },
+  { id: 7, name: "Eko Emerald", color: "#10B981", gradient: "linear-gradient(135deg, #34D399 0%, #059669 100%)", icon: "💎", img: "assets/vibers/viber7.webp" }
 ];
 
 const SAGA_STAGES = [
-  { level: 1, title: "Stage 1: Scout Raider", targetScore: 1200, moves: 22, numTypes: 4, iceCount: 0, rewardPfp: "assets/vibers/viber1.webp", rewardName: "Scout Antenna" },
-  { level: 2, title: "Stage 2: Break the FUD", targetScore: 2400, moves: 20, numTypes: 5, iceCount: 8, rewardPfp: "assets/vibers/viber2.webp", rewardName: "Defender Cap" },
-  { level: 3, title: "Stage 3: Spark Charge", targetScore: 3800, moves: 20, numTypes: 5, iceCount: 10, rewardPfp: "assets/vibers/viber3.webp", rewardName: "Spark Chest" },
-  { level: 4, title: "Stage 4: FUD Blizzard", targetScore: 5200, moves: 18, numTypes: 6, iceCount: 14, rewardPfp: "assets/vibers/viber4.webp", rewardName: "Visor Sentinel" },
-  { level: 5, title: "Stage 5: Testnet Boss", targetScore: 7000, moves: 16, numTypes: 6, iceCount: 16, rewardPfp: "assets/vibers/viber5.webp", rewardName: "Crown Master" },
-  { level: 6, title: "Stage 6: Neon Surge", targetScore: 8800, moves: 18, numTypes: 6, iceCount: 18, rewardPfp: "assets/vibers/viber6.webp", rewardName: "Gold Ear Raider" },
-  { level: 7, title: "Stage 7: Glitch Zone", targetScore: 10500, moves: 17, numTypes: 6, iceCount: 20, rewardPfp: "assets/vibers/viber7.webp", rewardName: "Frost Navigator" },
-  { level: 8, title: "Stage 8: Deep Matrix", targetScore: 12500, moves: 16, numTypes: 7, iceCount: 22, rewardPfp: "assets/vibers/viber8.webp", rewardName: "Matrix Hacker" },
-  { level: 9, title: "Stage 9: Overdrive", targetScore: 15000, moves: 15, numTypes: 7, iceCount: 24, rewardPfp: "assets/vibers/viber9.webp", rewardName: "Overdrive Viber" },
-  { level: 10, title: "Stage 10: Supreme Vibe God", targetScore: 18000, moves: 14, numTypes: 7, iceCount: 26, rewardPfp: "assets/vibers/viber10.webp", rewardName: "Supreme Commander" }
+  { level: 1, title: "Ojuelegba - Yaba", areaTag: "Area 1", targetScore: 1200, moves: 22, numTypes: 4, iceCount: 0, rewardPfp: "assets/vibers/viber1.webp", rewardName: "Danfo Conductor" },
+  { level: 2, title: "Lagos Island - Marina", areaTag: "Area 2", targetScore: 2400, moves: 20, numTypes: 5, iceCount: 8, rewardPfp: "assets/vibers/viber2.webp", rewardName: "Marina Pilot" },
+  { level: 3, title: "Lekki Phase 1 - Tollgate", areaTag: "Area 3", targetScore: 3800, moves: 20, numTypes: 5, iceCount: 10, rewardPfp: "assets/vibers/viber3.webp", rewardName: "Lekki Cruiser" },
+  { level: 4, title: "Computer Village - Ikeja", areaTag: "Area 4", targetScore: 5200, moves: 18, numTypes: 6, iceCount: 14, rewardPfp: "assets/vibers/viber4.webp", rewardName: "Tech Hub Hacker" },
+  { level: 5, title: "Alaba International Hub", areaTag: "Area 5", targetScore: 7000, moves: 16, numTypes: 6, iceCount: 16, rewardPfp: "assets/vibers/viber5.webp", rewardName: "Alaba Trader" },
+  { level: 6, title: "Mile 2 - Oshodi Overpass", areaTag: "Area 6", targetScore: 8800, moves: 18, numTypes: 6, iceCount: 18, rewardPfp: "assets/vibers/viber6.webp", rewardName: "Oshodi Striker" },
+  { level: 7, title: "Victoria Island - Eko Atlantic", areaTag: "Area 7", targetScore: 10500, moves: 17, numTypes: 6, iceCount: 20, rewardPfp: "assets/vibers/viber7.webp", rewardName: "Eko Atlantic Tycoon" },
+  { level: 8, title: "Festac Cyber Strip", areaTag: "Area 8", targetScore: 12500, moves: 16, numTypes: 7, iceCount: 22, rewardPfp: "assets/vibers/viber8.webp", rewardName: "Festac Raider" },
+  { level: 9, title: "Third Mainland Expressway", areaTag: "Area 9", targetScore: 15000, moves: 15, numTypes: 7, iceCount: 24, rewardPfp: "assets/vibers/viber9.webp", rewardName: "Expressway King" },
+  { level: 10, title: "Supreme Vibe Shrine", areaTag: "Area 10", targetScore: 18000, moves: 14, numTypes: 7, iceCount: 26, rewardPfp: "assets/vibers/viber10.webp", rewardName: "Supreme Lagos God" }
 ];
 
 const RANKS = [
@@ -139,14 +139,64 @@ class VibeCrushGame {
     this.xpValueEl = document.getElementById("xpValue");
     this.playerNicknameEl = document.getElementById("playerNickname");
 
+    // Lagos Dashboard & Danfo Run Features
+    this.currentStamps = 0;
+    this.bestScore = parseInt(localStorage.getItem("vibecrush_best_score") || "0");
+    this.coins = parseInt(localStorage.getItem("vibecrush_coins") || "450");
+    this.fuel = parseInt(localStorage.getItem("vibecrush_fuel") || "100");
+
+    this.bestScoreEl = document.getElementById("bestScoreVal");
+    this.coinsEl = document.getElementById("coinsValue");
+    this.fuelEl = document.getElementById("fuelValue");
+    this.stampTextEl = document.getElementById("stampText");
+    this.stampSlotsEl = document.getElementById("stampSlotsContainer");
+    this.stampAreaNameEl = document.getElementById("stampAreaName");
+    this.routeAreaTagEl = document.getElementById("routeAreaTag");
+    this.routeTitleEl = document.getElementById("routeTitle");
+    this.routeSubEl = document.getElementById("routeSub");
+    this.stationNameDisplayEl = document.getElementById("stationNameDisplay");
+
     const pCanvas = document.getElementById("particlesCanvas");
     this.particles = new ParticleSystem(pCanvas);
 
+    this.updateBestScoreUI();
+    this.updateStampUI();
     this.checkOnboarding();
     this.updateCareerUI();
     this.updateBoosterUI();
     this.initEventListeners();
     this.startCurrentMode();
+  }
+
+  updateBestScoreUI() {
+    if (this.bestScoreEl) {
+      this.bestScoreEl.textContent = this.bestScore.toLocaleString();
+    }
+  }
+
+  updateStampUI() {
+    if (this.stampTextEl) {
+      this.stampTextEl.textContent = `${this.currentStamps}/9 stamps`;
+    }
+    if (this.stampSlotsEl) {
+      const holes = this.stampSlotsEl.querySelectorAll(".stamp-hole");
+      holes.forEach((h, idx) => {
+        if (idx < this.currentStamps) h.classList.add("punched");
+        else h.classList.remove("punched");
+      });
+    }
+    const modalSlots = document.getElementById("modalStampSlots");
+    if (modalSlots) {
+      const mHoles = modalSlots.querySelectorAll(".sheet-hole");
+      mHoles.forEach((h, idx) => {
+        if (idx < this.currentStamps) h.classList.add("punched");
+        else h.classList.remove("punched");
+      });
+    }
+    const mCount = document.getElementById("modalStampCount");
+    if (mCount) {
+      mCount.textContent = `${this.currentStamps} of 9 stamps`;
+    }
   }
 
   get currentStage() {
@@ -226,16 +276,24 @@ class VibeCrushGame {
     this.movesLeft = Math.round(stage.moves * (this.difficulty === "easy" ? 1.25 : this.difficulty === "hard" ? 0.85 : 1));
     this.targetScore = Math.round(stage.targetScore * diffMult);
     this.iceLeft = stage.iceCount;
+    this.currentStamps = 0;
+    this.updateStampUI();
 
-    this.levelEl.textContent = `S${stage.level}`;
-    this.movesLabelEl.textContent = "Moves";
-    this.movesEl.textContent = this.movesLeft;
-    this.targetEl.textContent = this.targetScore.toLocaleString();
+    if (this.levelEl) this.levelEl.textContent = `A${stage.level}`;
+    if (this.movesLabelEl) this.movesLabelEl.textContent = "Moves";
+    if (this.movesEl) this.movesEl.textContent = this.movesLeft;
+    if (this.targetEl) this.targetEl.textContent = this.targetScore.toLocaleString();
+
+    // Update Lagos Route Selector Banner & Cards
+    if (this.routeAreaTagEl) this.routeAreaTagEl.textContent = stage.areaTag || `Area ${stage.level}`;
+    if (this.routeTitleEl) this.routeTitleEl.textContent = stage.title;
+    if (this.routeSubEl) this.routeSubEl.textContent = `Target: ${this.targetScore.toLocaleString()} pts`;
+    if (this.stampAreaNameEl) this.stampAreaNameEl.textContent = stage.title.split("-")[0].trim();
 
     if (this.iceLeft > 0) {
-      this.objectiveEl.innerHTML = `Break <b>${this.iceLeft} FUD Ice</b> & hit <b>${this.targetScore.toLocaleString()}</b> pts`;
+      this.objectiveEl.innerHTML = `Break <b>${this.iceLeft} Traffic Jams</b> & hit <b>${this.targetScore.toLocaleString()}</b> pts`;
     } else {
-      this.objectiveEl.innerHTML = `Reach <b>${this.targetScore.toLocaleString()}</b> points in <b>${this.movesLeft}</b> moves`;
+      this.objectiveEl.innerHTML = `Collect <b>9 Stamps</b> (${this.targetScore.toLocaleString()} pts) in <b>${this.movesLeft}</b> moves`;
     }
 
     this.initBoard(stage.numTypes, this.iceLeft);
@@ -367,8 +425,16 @@ class VibeCrushGame {
           tile.className = "tile";
         }
 
-        tile.style.backgroundImage = `url('${cell.type.img}')`;
-        tile.style.backgroundColor = cell.type.color;
+        tile.style.backgroundImage = "none";
+        tile.style.background = cell.type.gradient || cell.type.color;
+
+        let glyph = tile.querySelector(".tile-glyph");
+        if (!glyph) {
+          glyph = document.createElement("span");
+          glyph.className = "tile-glyph";
+          tile.appendChild(glyph);
+        }
+        glyph.textContent = cell.type.icon || "🚕";
 
         if (this.selectedTile && this.selectedTile.r === r && this.selectedTile.c === c) {
           tile.classList.add("selected");
@@ -1033,6 +1099,21 @@ class VibeCrushGame {
     this.score += pts;
     this.scoreEl.textContent = this.score.toLocaleString();
     this.updateProgressBar();
+
+    if (this.score > this.bestScore) {
+      this.bestScore = this.score;
+      localStorage.setItem("vibecrush_best_score", this.bestScore);
+      this.updateBestScoreUI();
+    }
+
+    if (this.currentMode === "saga" && this.targetScore > 0) {
+      const calculatedStamps = Math.min(9, Math.floor((this.score / this.targetScore) * 9));
+      if (calculatedStamps > this.currentStamps) {
+        this.currentStamps = calculatedStamps;
+        window.audio.playStamp();
+        this.updateStampUI();
+      }
+    }
   }
 
   updateProgressBar() {
@@ -1342,26 +1423,133 @@ window.addEventListener("DOMContentLoaded", () => {
     mapModal.classList.add("active");
   };
 
-  document.getElementById("btnCloseMap").onclick = () => mapModal.classList.remove("active");
+  // Live Interactive Lagos Radio Pill
+  const radioPill = document.getElementById("radioStationPill");
+  if (radioPill) {
+    radioPill.onclick = () => {
+      const station = window.audio.switchStation();
+      const nameDisp = document.getElementById("stationNameDisplay");
+      if (nameDisp) nameDisp.textContent = station.name;
+    };
+  }
+
+  // Route Navigator Left / Right Arrows
+  const prevBtn = document.getElementById("btnPrevRoute");
+  if (prevBtn) {
+    prevBtn.onclick = () => {
+      if (window.game.stageIndex > 0) {
+        window.game.stageIndex--;
+      } else {
+        window.game.stageIndex = SAGA_STAGES.length - 1;
+      }
+      window.game.currentMode = "saga";
+      window.game.startCurrentMode();
+    };
+  }
+
+  const nextBtn = document.getElementById("btnNextRoute");
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      if (window.game.stageIndex < SAGA_STAGES.length - 1) {
+        window.game.stageIndex++;
+      } else {
+        window.game.stageIndex = 0;
+      }
+      window.game.currentMode = "saga";
+      window.game.startCurrentMode();
+    };
+  }
+
+  // Route Detail & Ticket Punch Modal
+  const openAreaModal = () => {
+    const stage = window.game.currentStage;
+    const pill = document.getElementById("modalAreaPill");
+    if (pill) pill.textContent = stage.areaTag || `Area ${stage.level}`;
+    const title = document.getElementById("modalAreaTitle");
+    if (title) title.textContent = stage.title;
+    const lock = document.getElementById("modalAreaLockIcon");
+    if (lock) lock.textContent = window.game.stageIndex <= window.game.unlockedStage ? "🔓" : "🔒";
+    window.game.updateStampUI();
+    document.getElementById("modalAreaDetail").classList.add("active");
+  };
+
+  const ticketCard = document.getElementById("btnOpenTicketCard");
+  if (ticketCard) ticketCard.onclick = openAreaModal;
+
+  const routeDetail = document.getElementById("btnRouteDetail");
+  if (routeDetail) routeDetail.onclick = openAreaModal;
+
+  const closeAreaBtn = document.getElementById("btnCloseAreaModal");
+  if (closeAreaBtn) {
+    closeAreaBtn.onclick = () => {
+      document.getElementById("modalAreaDetail").classList.remove("active");
+    };
+  }
+
+  const startRouteBtn = document.getElementById("btnStartRoute");
+  if (startRouteBtn) {
+    startRouteBtn.onclick = () => {
+      document.getElementById("modalAreaDetail").classList.remove("active");
+      window.game.startCurrentMode();
+    };
+  }
+
+  // Single-Tap Google Sign-In Simulation
+  const googleBtn = document.getElementById("btnGoogleSignin");
+  if (googleBtn) {
+    googleBtn.onclick = () => {
+      window.audio.playRewardChime();
+      const currentNick = window.game.playerNickname || "Raider_" + Math.floor(Math.random() * 899 + 100);
+      window.game.setNickname(currentNick);
+      const btnTxt = document.getElementById("googleBtnText");
+      if (btnTxt) btnTxt.textContent = `Signed in: ${currentNick} ✓`;
+      googleBtn.style.background = "#15803d";
+      setTimeout(() => {
+        document.getElementById("modalAreaDetail").classList.remove("active");
+      }, 700);
+    };
+  }
+
+  // Tokunbo Reward Card & Leaders Button
+  const tokunboBtn = document.getElementById("btnTokunboReward");
+  if (tokunboBtn) {
+    tokunboBtn.onclick = () => {
+      document.getElementById("btnGallery").click();
+    };
+  }
+
+  const leadersBtn = document.getElementById("btnOpenLeaders");
+  if (leadersBtn) {
+    leadersBtn.onclick = () => {
+      document.getElementById("btnSagaMap").click();
+    };
+  }
+
+  const mapCloseBtn = document.getElementById("btnCloseMap");
+  if (mapCloseBtn) mapCloseBtn.onclick = () => mapModal.classList.remove("active");
 
   // Gallery Modal
   const galleryModal = document.getElementById("modalGallery");
-  document.getElementById("btnGallery").onclick = () => {
-    const grid = document.getElementById("galleryGrid");
-    grid.innerHTML = "";
-    SAGA_STAGES.forEach((stg) => {
-      const unlocked = window.game.unlockedPFPs.includes(stg.rewardPfp);
-      const item = document.createElement("div");
-      item.className = `gallery-item ${unlocked ? "unlocked" : "locked"}`;
-      item.innerHTML = `
-        <img src="${stg.rewardPfp}" alt="${stg.rewardName}" />
-        <span>${stg.rewardName}</span>
-        ${unlocked ? `<a class="btn-download-pfp" href="${stg.rewardPfp}" download="${stg.rewardName}.webp">⬇ Save PFP</a>` : `<span style="font-size:10px; color:#666;">Locked (Beat S${stg.level})</span>`}
-      `;
-      grid.appendChild(item);
-    });
-    galleryModal.classList.add("active");
-  };
+  const galleryBtn = document.getElementById("btnGallery");
+  if (galleryBtn && galleryModal) {
+    galleryBtn.onclick = () => {
+      const grid = document.getElementById("galleryGrid");
+      grid.innerHTML = "";
+      SAGA_STAGES.forEach((stg) => {
+        const unlocked = window.game.unlockedPFPs.includes(stg.rewardPfp);
+        const item = document.createElement("div");
+        item.className = `gallery-item ${unlocked ? "unlocked" : "locked"}`;
+        item.innerHTML = `
+          <img src="${stg.rewardPfp}" alt="${stg.rewardName}" />
+          <span>${stg.rewardName}</span>
+          ${unlocked ? `<a class="btn-download-pfp" href="${stg.rewardPfp}" download="${stg.rewardName}.webp">⬇ Save PFP</a>` : `<span style="font-size:10px; color:#666;">Locked (Beat S${stg.level})</span>`}
+        `;
+        grid.appendChild(item);
+      });
+      galleryModal.classList.add("active");
+    };
+  }
 
-  document.getElementById("btnCloseGallery").onclick = () => galleryModal.classList.remove("active");
+  const closeGalleryBtn = document.getElementById("btnCloseGallery");
+  if (closeGalleryBtn && galleryModal) closeGalleryBtn.onclick = () => galleryModal.classList.remove("active");
 });

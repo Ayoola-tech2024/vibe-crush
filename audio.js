@@ -38,20 +38,58 @@ class AudioManager {
     return this.muted;
   }
 
+  getStations() {
+    return [
+      { name: "Ojuelegba FM", sub: "Afrobeat Vibes", bpm: 420, chords: [[220, 261.63, 329.63], [174.61, 220, 261.63], [261.63, 329.63, 392], [196, 246.94, 293.66]] },
+      { name: "Yaba Tech Beats", sub: "Cyber Lofi Synth", bpm: 360, chords: [[164.81, 196.00, 246.94], [220.00, 261.63, 329.63], [146.83, 174.61, 220.00], [196.00, 246.94, 293.66]] },
+      { name: "Marina Sunset", sub: "Eko Chill Lounge", bpm: 480, chords: [[261.63, 329.63, 392.00], [293.66, 349.23, 440.00], [220.00, 261.63, 329.63], [174.61, 220.00, 261.63]] }
+    ];
+  }
+
+  get currentStationInfo() {
+    const list = this.getStations();
+    return list[this.stationIndex || 0];
+  }
+
+  switchStation() {
+    const list = this.getStations();
+    this.stationIndex = ((this.stationIndex || 0) + 1) % list.length;
+    this.playRadioSwitch();
+    if (this.bgmPlaying) {
+      this.stopBGM();
+      this.startBGM();
+    }
+    return list[this.stationIndex];
+  }
+
+  playRadioSwitch() {
+    if (this.muted || !this.ctx) return;
+    this.resume();
+    const t = this.ctx.currentTime;
+    // Static white noise burst + frequency sweep
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(120, t);
+    osc.frequency.exponentialRampToValueAtTime(1800, t + 0.08);
+    osc.frequency.exponentialRampToValueAtTime(440, t + 0.16);
+    gain.gain.setValueAtTime(0.15, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.18);
+  }
+
   startBGM() {
     if (this.muted || !this.ctx || this.bgmPlaying) return;
     this.resume();
     this.bgmPlaying = true;
     this.bgmStep = 0;
 
-    const chords = [
-      [220, 261.63, 329.63], // Am
-      [174.61, 220, 261.63], // F
-      [261.63, 329.63, 392], // C
-      [196, 246.94, 293.66]  // G
-    ];
-
-    const intervalMs = 420;
+    const station = this.currentStationInfo;
+    const chords = station.chords;
+    const intervalMs = station.bpm;
 
     this.bgmTimer = setInterval(() => {
       if (this.muted || !this.ctx) return;
@@ -59,6 +97,7 @@ class AudioManager {
       const chordIndex = Math.floor(this.bgmStep / 4) % chords.length;
       const chord = chords[chordIndex];
 
+      // Bass Kick/Pluck
       if (this.bgmStep % 2 === 0) {
         const bassOsc = this.ctx.createOscillator();
         const bassGain = this.ctx.createGain();
@@ -73,6 +112,7 @@ class AudioManager {
         bassOsc.stop(t + 0.18);
       }
 
+      // Melody Chimes
       const noteFreq = chord[this.bgmStep % 3];
       const padOsc = this.ctx.createOscillator();
       const padGain = this.ctx.createGain();
@@ -373,6 +413,56 @@ class AudioManager {
     gain.connect(this.ctx.destination);
     osc.start(t);
     osc.stop(t + 0.25);
+  }
+
+  // Tactile Transit Ticket Punch Stamp Clack + Ping
+  playStamp() {
+    if (this.muted || !this.ctx) return;
+    this.resume();
+    const t = this.ctx.currentTime;
+
+    // Heavy punch clack
+    const punchOsc = this.ctx.createOscillator();
+    const punchGain = this.ctx.createGain();
+    punchOsc.type = "triangle";
+    punchOsc.frequency.setValueAtTime(180, t);
+    punchOsc.frequency.exponentialRampToValueAtTime(45, t + 0.06);
+    punchGain.gain.setValueAtTime(0.25, t);
+    punchGain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+    punchOsc.connect(punchGain);
+    punchGain.connect(this.ctx.destination);
+    punchOsc.start(t);
+    punchOsc.stop(t + 0.07);
+
+    // Bell ping
+    const bellOsc = this.ctx.createOscillator();
+    const bellGain = this.ctx.createGain();
+    bellOsc.type = "sine";
+    bellOsc.frequency.setValueAtTime(1046.5, t + 0.02); // C6
+    bellGain.gain.setValueAtTime(0.12, t + 0.02);
+    bellGain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+    bellOsc.connect(bellGain);
+    bellGain.connect(this.ctx.destination);
+    bellOsc.start(t + 0.02);
+    bellOsc.stop(t + 0.25);
+  }
+
+  playRewardChime() {
+    if (this.muted || !this.ctx) return;
+    this.resume();
+    const t = this.ctx.currentTime;
+    [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq, t + idx * 0.06);
+      gain.gain.setValueAtTime(0.12, t + idx * 0.06);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + idx * 0.06 + 0.2);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(t + idx * 0.06);
+      osc.stop(t + idx * 0.06 + 0.2);
+    });
   }
 }
 
