@@ -4,26 +4,26 @@
 const GRID_SIZE = 8;
 
 const VIBERS = [
-  { id: 1, name: "Danfo Gold", color: "#FFB800", gradient: "linear-gradient(135deg, #FFE259 0%, #FFA751 100%)", icon: "🚕", img: "assets/vibers/viber1.webp" },
-  { id: 2, name: "Marina Blue", color: "#0284C7", gradient: "linear-gradient(135deg, #38BDF8 0%, #0284C7 100%)", icon: "⚡", img: "assets/vibers/viber2.webp" },
-  { id: 3, name: "Ojuelegba Sunset", color: "#E11D48", gradient: "linear-gradient(135deg, #FB7185 0%, #E11D48 100%)", icon: "🌶️", img: "assets/vibers/viber3.webp" },
-  { id: 4, name: "Market Spice", color: "#F97316", gradient: "linear-gradient(135deg, #FDBA74 0%, #EA580C 100%)", icon: "🧺", img: "assets/vibers/viber4.webp" },
-  { id: 5, name: "Lagos Crown", color: "#8B5CF6", gradient: "linear-gradient(135deg, #C084FC 0%, #7C3AED 100%)", icon: "👑", img: "assets/vibers/viber5.webp" },
-  { id: 6, name: "Lucky Star", color: "#EAB308", gradient: "linear-gradient(135deg, #FDE047 0%, #CA8A04 100%)", icon: "⭐", img: "assets/vibers/viber6.webp" },
-  { id: 7, name: "Eko Emerald", color: "#10B981", gradient: "linear-gradient(135deg, #34D399 0%, #059669 100%)", icon: "💎", img: "assets/vibers/viber7.webp" }
+  { id: 1, name: "Mint Antenna", color: "#00F5D4", gradient: "linear-gradient(135deg, #00F5D4 0%, #0284C7 100%)", img: "assets/vibers/viber1.webp" },
+  { id: 2, name: "Cap Blue", color: "#3B82F6", gradient: "linear-gradient(135deg, #38BDF8 0%, #1D4ED8 100%)", img: "assets/vibers/viber2.webp" },
+  { id: 3, name: "Peach Spark", color: "#FB7185", gradient: "linear-gradient(135deg, #FDA4AF 0%, #E11D48 100%)", img: "assets/vibers/viber3.webp" },
+  { id: 4, name: "Visor Sentinel", color: "#F59E0B", gradient: "linear-gradient(135deg, #FDE047 0%, #D97706 100%)", img: "assets/vibers/viber4.webp" },
+  { id: 5, name: "Crown Master", color: "#A855F7", gradient: "linear-gradient(135deg, #C084FC 0%, #7E22CE 100%)", img: "assets/vibers/viber5.webp" },
+  { id: 6, name: "Gold Ears", color: "#EAB308", gradient: "linear-gradient(135deg, #FEF08A 0%, #CA8A04 100%)", img: "assets/vibers/viber6.webp" },
+  { id: 7, name: "Ice Frost", color: "#06B6D4", gradient: "linear-gradient(135deg, #67E8F9 0%, #0E7490 100%)", img: "assets/vibers/viber7.webp" }
 ];
 
 const SAGA_STAGES = [
-  { level: 1, title: "Ojuelegba - Yaba", areaTag: "Area 1", targetScore: 1200, moves: 22, numTypes: 4, iceCount: 0, rewardPfp: "assets/vibers/viber1.webp", rewardName: "Danfo Conductor" },
-  { level: 2, title: "Lagos Island - Marina", areaTag: "Area 2", targetScore: 2400, moves: 20, numTypes: 5, iceCount: 8, rewardPfp: "assets/vibers/viber2.webp", rewardName: "Marina Pilot" },
-  { level: 3, title: "Lekki Phase 1 - Tollgate", areaTag: "Area 3", targetScore: 3800, moves: 20, numTypes: 5, iceCount: 10, rewardPfp: "assets/vibers/viber3.webp", rewardName: "Lekki Cruiser" },
-  { level: 4, title: "Computer Village - Ikeja", areaTag: "Area 4", targetScore: 5200, moves: 18, numTypes: 6, iceCount: 14, rewardPfp: "assets/vibers/viber4.webp", rewardName: "Tech Hub Hacker" },
-  { level: 5, title: "Alaba International Hub", areaTag: "Area 5", targetScore: 7000, moves: 16, numTypes: 6, iceCount: 16, rewardPfp: "assets/vibers/viber5.webp", rewardName: "Alaba Trader" },
-  { level: 6, title: "Mile 2 - Oshodi Overpass", areaTag: "Area 6", targetScore: 8800, moves: 18, numTypes: 6, iceCount: 18, rewardPfp: "assets/vibers/viber6.webp", rewardName: "Oshodi Striker" },
-  { level: 7, title: "Victoria Island - Eko Atlantic", areaTag: "Area 7", targetScore: 10500, moves: 17, numTypes: 6, iceCount: 20, rewardPfp: "assets/vibers/viber7.webp", rewardName: "Eko Atlantic Tycoon" },
-  { level: 8, title: "Festac Cyber Strip", areaTag: "Area 8", targetScore: 12500, moves: 16, numTypes: 7, iceCount: 22, rewardPfp: "assets/vibers/viber8.webp", rewardName: "Festac Raider" },
-  { level: 9, title: "Third Mainland Expressway", areaTag: "Area 9", targetScore: 15000, moves: 15, numTypes: 7, iceCount: 24, rewardPfp: "assets/vibers/viber9.webp", rewardName: "Expressway King" },
-  { level: 10, title: "Supreme Vibe Shrine", areaTag: "Area 10", targetScore: 18000, moves: 14, numTypes: 7, iceCount: 26, rewardPfp: "assets/vibers/viber10.webp", rewardName: "Supreme Lagos God" }
+  { level: 1, title: "Genesis Citadel", areaTag: "Sector 1", targetScore: 1200, moves: 22, numTypes: 4, iceCount: 0, rewardPfp: "assets/vibers/viber1.webp", rewardName: "Mint Antenna" },
+  { level: 2, title: "Testnet Grid", areaTag: "Sector 2", targetScore: 2400, moves: 20, numTypes: 5, iceCount: 8, rewardPfp: "assets/vibers/viber2.webp", rewardName: "Defender Cap" },
+  { level: 3, title: "Cyber District", areaTag: "Sector 3", targetScore: 3800, moves: 20, numTypes: 5, iceCount: 10, rewardPfp: "assets/vibers/viber3.webp", rewardName: "Spark Chest" },
+  { level: 4, title: "Neon Highrise", areaTag: "Sector 4", targetScore: 5200, moves: 18, numTypes: 6, iceCount: 14, rewardPfp: "assets/vibers/viber4.webp", rewardName: "Visor Sentinel" },
+  { level: 5, title: "Node Cluster", areaTag: "Sector 5", targetScore: 7000, moves: 16, numTypes: 6, iceCount: 16, rewardPfp: "assets/vibers/viber5.webp", rewardName: "Crown Master" },
+  { level: 6, title: "Mainnet Gateway", areaTag: "Sector 6", targetScore: 8800, moves: 18, numTypes: 6, iceCount: 18, rewardPfp: "assets/vibers/viber6.webp", rewardName: "Gold Ear Raider" },
+  { level: 7, title: "Quantum Vault", areaTag: "Sector 7", targetScore: 10500, moves: 17, numTypes: 6, iceCount: 20, rewardPfp: "assets/vibers/viber7.webp", rewardName: "Frost Navigator" },
+  { level: 8, title: "Hyperdrive Matrix", areaTag: "Sector 8", targetScore: 12500, moves: 16, numTypes: 7, iceCount: 22, rewardPfp: "assets/vibers/viber8.webp", rewardName: "Matrix Hacker" },
+  { level: 9, title: "Deep Core Nexus", areaTag: "Sector 9", targetScore: 15000, moves: 15, numTypes: 7, iceCount: 24, rewardPfp: "assets/vibers/viber9.webp", rewardName: "Overdrive Viber" },
+  { level: 10, title: "Supreme Vibe Shrine", areaTag: "Sector 10", targetScore: 18000, moves: 14, numTypes: 7, iceCount: 26, rewardPfp: "assets/vibers/viber10.webp", rewardName: "Supreme Commander" }
 ];
 
 const RANKS = [
@@ -279,21 +279,21 @@ class VibeCrushGame {
     this.currentStamps = 0;
     this.updateStampUI();
 
-    if (this.levelEl) this.levelEl.textContent = `A${stage.level}`;
+    if (this.levelEl) this.levelEl.textContent = `S${stage.level}`;
     if (this.movesLabelEl) this.movesLabelEl.textContent = "Moves";
     if (this.movesEl) this.movesEl.textContent = this.movesLeft;
     if (this.targetEl) this.targetEl.textContent = this.targetScore.toLocaleString();
 
-    // Update Lagos Route Selector Banner & Cards
-    if (this.routeAreaTagEl) this.routeAreaTagEl.textContent = stage.areaTag || `Area ${stage.level}`;
+    // Update Sector Selector Banner & Cards
+    if (this.routeAreaTagEl) this.routeAreaTagEl.textContent = stage.areaTag || `Sector ${stage.level}`;
     if (this.routeTitleEl) this.routeTitleEl.textContent = stage.title;
     if (this.routeSubEl) this.routeSubEl.textContent = `Target: ${this.targetScore.toLocaleString()} pts`;
-    if (this.stampAreaNameEl) this.stampAreaNameEl.textContent = stage.title.split("-")[0].trim();
+    if (this.stampAreaNameEl) this.stampAreaNameEl.textContent = stage.title;
 
     if (this.iceLeft > 0) {
-      this.objectiveEl.innerHTML = `Break <b>${this.iceLeft} Traffic Jams</b> & hit <b>${this.targetScore.toLocaleString()}</b> pts`;
+      this.objectiveEl.innerHTML = `Break <b>${this.iceLeft} FUD Glitches</b> & hit <b>${this.targetScore.toLocaleString()}</b> pts`;
     } else {
-      this.objectiveEl.innerHTML = `Collect <b>9 Stamps</b> (${this.targetScore.toLocaleString()} pts) in <b>${this.movesLeft}</b> moves`;
+      this.objectiveEl.innerHTML = `Collect <b>9 Raid Stamps</b> (${this.targetScore.toLocaleString()} pts) in <b>${this.movesLeft}</b> moves`;
     }
 
     this.initBoard(stage.numTypes, this.iceLeft);
@@ -428,13 +428,13 @@ class VibeCrushGame {
         tile.style.backgroundImage = "none";
         tile.style.background = cell.type.gradient || cell.type.color;
 
-        let glyph = tile.querySelector(".tile-glyph");
-        if (!glyph) {
-          glyph = document.createElement("span");
-          glyph.className = "tile-glyph";
-          tile.appendChild(glyph);
+        let avatar = tile.querySelector(".tile-avatar");
+        if (!avatar) {
+          avatar = document.createElement("div");
+          avatar.className = "tile-avatar";
+          tile.appendChild(avatar);
         }
-        glyph.textContent = cell.type.icon || "🚕";
+        avatar.style.backgroundImage = `url('${cell.type.img}')`;
 
         if (this.selectedTile && this.selectedTile.r === r && this.selectedTile.c === c) {
           tile.classList.add("selected");

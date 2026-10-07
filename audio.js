@@ -40,9 +40,9 @@ class AudioManager {
 
   getStations() {
     return [
-      { name: "Ojuelegba FM", sub: "Afrobeat Vibes", bpm: 420, chords: [[220, 261.63, 329.63], [174.61, 220, 261.63], [261.63, 329.63, 392], [196, 246.94, 293.66]] },
-      { name: "Yaba Tech Beats", sub: "Cyber Lofi Synth", bpm: 360, chords: [[164.81, 196.00, 246.94], [220.00, 261.63, 329.63], [146.83, 174.61, 220.00], [196.00, 246.94, 293.66]] },
-      { name: "Marina Sunset", sub: "Eko Chill Lounge", bpm: 480, chords: [[261.63, 329.63, 392.00], [293.66, 349.23, 440.00], [220.00, 261.63, 329.63], [174.61, 220.00, 261.63]] }
+      { name: "Vibe Raider FM", sub: "Citadel Cyber Groove", bpm: 420, chords: [[220, 261.63, 329.63], [174.61, 220, 261.63], [261.63, 329.63, 392], [196, 246.94, 293.66]] },
+      { name: "Testnet Synthwave", sub: "80s Neon Arpeggio", bpm: 360, chords: [[164.81, 196.00, 246.94], [220.00, 261.63, 329.63], [146.83, 174.61, 220.00], [196.00, 246.94, 293.66]] },
+      { name: "Lofi Chill Nexus", sub: "Ambient Node Lounge", bpm: 480, chords: [[261.63, 329.63, 392.00], [293.66, 349.23, 440.00], [220.00, 261.63, 329.63], [174.61, 220.00, 261.63]] }
     ];
   }
 

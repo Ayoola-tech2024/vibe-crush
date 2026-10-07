@@ -1,19 +1,17 @@
-/* styles.css - Lagos Street / Danfo Neubrutalist Arcade Aesthetic for Vibe Crush */
+/* styles.css - Cyber Raider Neubrutalist Arcade Aesthetic for Vibe Crush (@vibevibefun) */
 
 :root {
-  /* Lagos Danfo & Clay Palette */
-  --danfo-yellow: #FFC700;
-  --danfo-yellow-light: #FDE047;
-  --danfo-yellow-dark: #D97706;
-  --cream-card: #FFFDF7;
+  /* Vibe Cyber & Neubrutalist Palette */
+  --vibe-cyan: #00F5D4;
+  --vibe-purple: #A855F7;
+  --vibe-gold: #FACC15;
+  --vibe-blue: #38BDF8;
+  --vibe-red: #F43F5E;
+  --cream-card: #FFFDF8;
   --cream-card-dark: #F5EEDB;
   --charcoal-ink: #18181B;
   --charcoal-surface: #27272A;
-  --lagos-green: #15803D;
-  --lagos-green-light: #22C55E;
-  --coral-red: #EF4444;
-  --electric-blue: #0284C7;
-  --royal-purple: #8B5CF6;
+  --matrix-green: #10B981;
 
   /* Text & Border */
   --text-dark: #18181B;
@@ -46,7 +44,7 @@ html, body {
 }
 
 body {
-  background-color: #121019;
+  background-color: #0b0d17;
   color: var(--text-light);
   font-family: 'Fredoka', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   display: flex;
@@ -67,9 +65,9 @@ body {
 }
 
 /* ==========================================================================
-   Animated Lagos Sunset & Highway Skyline Environment (Backdrop)
+   Animated Cyber-Citadel Skyline Environment (Backdrop)
    ========================================================================== */
-.lagos-skyline-bg {
+.cyber-skyline-bg {
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -79,201 +77,155 @@ body {
   overflow: hidden;
 }
 
-/* Atmospheric Lagos Sunset Gradient */
-.sky-sunset {
+/* Deep Futuristic Twilight Gradient */
+.sky-cyber-gradient {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    #130e24 0%,
-    #241432 25%,
-    #4a1d2e 50%,
-    #782d1a 70%,
-    #b45309 85%,
-    #d97706 95%,
-    #f59e0b 100%
+    #090a12 0%,
+    #131124 25%,
+    #1d143a 50%,
+    #2c154a 75%,
+    #3b1859 90%,
+    #4a154b 100%
   );
-  opacity: 0.95;
+  opacity: 0.96;
 }
 
-/* Ambient Street Lamps Glow */
-.lagos-skyline-bg::after {
+/* Ambient Holographic Glow */
+.cyber-skyline-bg::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 240px;
-  background: radial-gradient(circle at 50% 100%, rgba(251, 191, 36, 0.22) 0%, transparent 70%);
+  height: 280px;
+  background: radial-gradient(circle at 50% 100%, rgba(168, 85, 247, 0.25) 0%, rgba(0, 245, 212, 0.12) 40%, transparent 75%);
   pointer-events: none;
 }
 
-/* Telegraph Poles & Sagging Electrical Wires across Sky */
-.sky-wires {
+/* Hologram Grid Laser Arcs across Sky */
+.sky-hologram-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  pointer-events: none;
+}
+
+.hologram-svg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 120px;
-  pointer-events: none;
+  opacity: 0.8;
 }
 
-.wire-svg {
+.cyber-pylon {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
+  width: 6px;
+  height: 140px;
+  background: linear-gradient(180deg, #18181b 0%, #27272a 100%);
+  border-left: 1.5px solid var(--vibe-cyan);
 }
 
-.telegraph-pole {
+.cyber-pylon.pylon-left { left: 6%; }
+.cyber-pylon.pylon-right { right: 8%; }
+
+.pylon-beacon {
   position: absolute;
-  top: 0;
-  width: 8px;
-  height: 130px;
-  background: #18181b;
+  top: 25px;
+  left: -5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--vibe-cyan);
+  box-shadow: 0 0 12px var(--vibe-cyan);
+  animation: beaconPulse 1.8s infinite alternate;
 }
 
-.telegraph-pole.pole-left {
-  left: 5%;
+@keyframes beaconPulse {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.2); opacity: 1; filter: brightness(1.4); }
 }
 
-.telegraph-pole.pole-right {
-  right: 8%;
-}
-
-.pole-crossbar {
-  position: absolute;
-  top: 30px;
-  left: -20px;
-  width: 48px;
-  height: 6px;
-  background: #18181b;
-  border-radius: 2px;
-}
-
-/* Highway Road & Hazard Curb */
-.highway-scene {
+/* Citadel Horizon & Distant Towers */
+.citadel-horizon {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 70px;
-  background: #18181b;
-  border-top: 5px solid #FFC700;
-  box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.8);
+  height: 75px;
+  background: #111218;
+  border-top: 4px solid var(--vibe-purple);
+  box-shadow: 0 -4px 20px rgba(168, 85, 247, 0.3);
 }
 
-.danfo-highway-line {
+.neon-speedline {
   position: absolute;
-  top: 32px;
+  top: 25px;
   left: 0;
   width: 200%;
-  height: 4px;
-  background: repeating-linear-gradient(90deg, #FFC700 0px, #FFC700 24px, transparent 24px, transparent 48px);
-  animation: highwayMove 2.5s linear infinite;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, var(--vibe-cyan) 0px, var(--vibe-cyan) 30px, transparent 30px, transparent 60px);
+  animation: speedlineMove 2.2s linear infinite;
 }
 
-@keyframes highwayMove {
+@keyframes speedlineMove {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-48px); }
+  100% { transform: translateX(-60px); }
 }
 
-/* Distant Mini Danfo Bus Cruising along Road */
-.mini-danfo-runner {
+.citadel-silhouettes {
   position: absolute;
-  bottom: 22px;
-  animation: danfoCruise 16s linear infinite;
-  z-index: 2;
-}
-
-@keyframes danfoCruise {
-  0% { transform: translateX(-120px); }
-  100% { transform: translateX(calc(100vw + 120px)); }
-}
-
-.mini-danfo {
-  position: relative;
-  width: 58px;
-  height: 32px;
-}
-
-.m-bus-body {
-  position: absolute;
-  bottom: 0;
-  width: 58px;
-  height: 24px;
-  background: #FFC700;
-  border: 2px solid #18181b;
-  border-radius: 6px 6px 3px 3px;
-  position: relative;
-}
-
-.m-windshield {
-  position: absolute;
-  top: 3px;
-  right: 4px;
-  width: 14px;
-  height: 10px;
-  background: #0ea5e9;
-  border: 1.5px solid #18181b;
-  border-radius: 2px;
-}
-
-.m-stripes {
-  position: absolute;
-  bottom: 6px;
+  bottom: 75px;
   left: 0;
   width: 100%;
-  height: 4px;
-  background: #18181b;
-}
-
-.m-roof-rack {
-  position: absolute;
-  top: -7px;
-  left: 8px;
-  width: 36px;
-  height: 7px;
-  border-top: 2px solid #18181b;
   display: flex;
-  gap: 4px;
+  justify-content: space-around;
   align-items: flex-end;
+  padding: 0 10px;
+  opacity: 0.35;
 }
 
-.m-blue-drum {
-  width: 12px;
-  height: 8px;
-  background: #0284C7;
-  border: 1px solid #18181b;
-  border-radius: 3px;
+.tower {
+  background: #18142a;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-bottom: none;
 }
 
-.m-cargo-box {
-  width: 14px;
-  height: 7px;
-  background: #ef4444;
-  border: 1px solid #18181b;
+.tower.t-1 { width: 34px; height: 50px; }
+.tower.t-2 { width: 44px; height: 75px; }
+.tower.t-main {
+  width: 70px;
+  height: 95px;
+  position: relative;
+  border-color: var(--vibe-cyan);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
 }
 
-.m-wheel {
-  position: absolute;
-  bottom: -4px;
-  width: 9px;
-  height: 9px;
-  background: #18181b;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  animation: wheelSpin 0.4s linear infinite;
+.hologram-logo {
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: var(--vibe-cyan);
+  text-shadow: 0 0 8px var(--vibe-cyan);
+  animation: logoGlow 2s infinite alternate;
 }
 
-.m-wheel.w-1 { left: 9px; }
-.m-wheel.w-2 { right: 9px; }
-
-@keyframes wheelSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes logoGlow {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; text-shadow: 0 0 14px var(--vibe-cyan); }
 }
+
+.tower.t-3 { width: 38px; height: 60px; }
+.tower.t-4 { width: 28px; height: 45px; }
 
 /* ==========================================================================
    App Main Layout Container
@@ -298,9 +250,9 @@ body {
 }
 
 /* ==========================================================================
-   Danfo Run Style Top Status Bar
+   Top Status Bar (Tactile Neubrutalist)
    ========================================================================== */
-.danfo-topbar {
+.vibe-topbar {
   width: 100%;
   display: flex;
   align-items: center;
@@ -335,15 +287,15 @@ body {
   font-size: 1rem;
 }
 
-.fuel-pill {
-  background: #f8fafc;
-}
-
-.coin-pill {
+.energy-pill {
   background: #fef08a;
 }
 
-/* Live Interactive Radio Pill (Ojuelegba FM) */
+.gem-pill {
+  background: #e0f2fe;
+}
+
+/* Live Interactive Cyber Radio Pill */
 .radio-pill {
   background: #18181b;
   color: #fff;
@@ -357,7 +309,7 @@ body {
 
 .radio-pill:hover {
   background: #27272a;
-  border-color: var(--danfo-yellow);
+  border-color: var(--vibe-cyan);
 }
 
 .radio-pill:active {
@@ -366,7 +318,7 @@ body {
 }
 
 .radio-badge {
-  background: var(--danfo-yellow);
+  background: var(--vibe-cyan);
   color: #000;
   font-size: 0.65rem;
   font-weight: 900;
@@ -386,7 +338,7 @@ body {
 
 .radio-arrow {
   font-size: 0.7rem;
-  color: var(--danfo-yellow);
+  color: var(--vibe-cyan);
 }
 
 .radio-anim {
@@ -426,9 +378,9 @@ body {
 }
 
 /* ==========================================================================
-   Danfo Tactile Cards Dashboard (Left & Right Columns)
+   Tactile Cards Dashboard Grid
    ========================================================================== */
-.danfo-dashboard-grid {
+.vibe-dashboard-grid {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -490,10 +442,10 @@ body {
   color: #fef08a;
 }
 
-/* Transit Ticket Stamp Card (Direct match to reference!) */
+/* Raider Bounty Stamp Card (Exact Tactile Ticket Feature) */
 .ticket-stamp-card {
   cursor: pointer;
-  background: #fffdf5;
+  background: #fffdf8;
   border-color: #18181b;
   padding: 7px 9px;
 }
@@ -541,14 +493,14 @@ body {
 }
 
 .stamp-hole.punched {
-  background: #eab308;
+  background: var(--vibe-gold);
   border-color: #ca8a04;
-  box-shadow: 0 0 6px rgba(234, 179, 8, 0.8);
+  box-shadow: 0 0 6px rgba(250, 204, 21, 0.85);
   transform: scale(1.15);
 }
 
-/* Tokunbo Reward Card */
-.tokunbo-reward-card {
+/* Free Viber Reward Card */
+.viber-reward-card {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -559,7 +511,7 @@ body {
   cursor: pointer;
 }
 
-.reward-van-icon {
+.reward-viber-icon {
   font-size: 1.4rem;
 }
 
@@ -571,7 +523,7 @@ body {
 .reward-subtitle {
   font-size: 0.62rem;
   font-weight: 700;
-  color: var(--danfo-yellow);
+  color: var(--vibe-cyan);
 }
 
 .reward-title {
@@ -580,9 +532,9 @@ body {
   color: #fff;
 }
 
-/* Right Column: Daily Market Card (Yellow Neubrutalist) */
+/* Right Column: Daily Surge Card */
 .market-event-card {
-  background: var(--danfo-yellow);
+  background: var(--vibe-gold);
   color: #18181b;
   border-color: #18181b;
   padding: 8px 10px;
@@ -662,9 +614,9 @@ body {
 }
 
 /* ==========================================================================
-   Route Selector Banner (Chunky Green Pill)
+   Sector Selector Banner (Chunky Cyber-Pill)
    ========================================================================== */
-.route-selector-banner {
+.sector-selector-banner {
   width: 100%;
   display: flex;
   align-items: center;
@@ -672,7 +624,7 @@ body {
   margin-top: 1px;
 }
 
-.route-arrow-btn {
+.sector-arrow-btn {
   width: 38px;
   height: 48px;
   border-radius: 12px;
@@ -689,14 +641,14 @@ body {
   transition: all 0.1s;
 }
 
-.route-arrow-btn:active {
+.sector-arrow-btn:active {
   transform: translateY(2px);
   box-shadow: 0 2px 0 #000;
 }
 
-.route-center-card {
+.sector-center-card {
   flex: 1;
-  background: var(--lagos-green);
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
   color: #fff;
   border: 2.5px solid #18181b;
   border-radius: 14px;
@@ -709,43 +661,43 @@ body {
   transition: transform 0.1s;
 }
 
-.route-center-card:hover {
-  background: #16a34a;
+.sector-center-card:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
 }
 
-.route-center-card:active {
+.sector-center-card:active {
   transform: translateY(2px);
   box-shadow: 0 2px 0 #18181b;
 }
 
-.route-stop-icon {
+.sector-node-icon {
   font-size: 1.4rem;
 }
 
-.route-text-content {
+.sector-text-content {
   display: flex;
   flex-direction: column;
 }
 
-.route-area-badge {
+.sector-tag-badge {
   font-size: 0.65rem;
   font-weight: 800;
-  color: #bbf7d0;
+  color: #c4b5fd;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.route-main-title {
+.sector-main-title {
   font-size: 0.95rem;
   font-weight: 900;
   line-height: 1.1;
   color: #fff;
 }
 
-.route-sub-target {
+.sector-sub-target {
   font-size: 0.68rem;
   font-weight: 700;
-  color: #86efac;
+  color: #a7f3d0;
 }
 
 /* ==========================================================================
@@ -773,7 +725,7 @@ body {
 }
 
 .mode-tab.active {
-  background: var(--danfo-yellow);
+  background: var(--vibe-cyan);
   color: #18181b;
   border-color: #18181b;
   box-shadow: 0 3px 0 #18181b;
@@ -808,7 +760,7 @@ body {
 }
 
 .diff-pill.active {
-  background: var(--lagos-green);
+  background: var(--matrix-green);
   color: #fff;
   box-shadow: 0 1px 0 #000;
 }
@@ -848,11 +800,11 @@ body {
 }
 
 .hud-value.highlight {
-  color: #b45309;
+  color: #7c3aed;
 }
 
 .hud-value.moves {
-  color: #15803d;
+  color: #059669;
 }
 
 /* Progress bar */
@@ -869,7 +821,7 @@ body {
 .progress-fill {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #facc15, #16a34a);
+  background: linear-gradient(90deg, var(--vibe-cyan), var(--vibe-purple));
   border-radius: 999px;
   transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -886,7 +838,7 @@ body {
 
 .combo-badge {
   display: none;
-  background: #ef4444;
+  background: var(--vibe-red);
   color: #fff;
   border: 1.5px solid #18181b;
   border-radius: 6px;
@@ -949,7 +901,7 @@ body {
 }
 
 /* ==========================================================================
-   Board Frame & 3D Candy Token Tiles (The Core Visual Elevation!)
+   Board Frame & High-Definition Viber Tokens (Character Medallions)
    ========================================================================== */
 .board-wrapper {
   position: relative;
@@ -987,7 +939,7 @@ body {
   justify-content: center;
 }
 
-/* 3D Glossy Candy Token Tile */
+/* 3D Viber Medallion Token Tile */
 .tile {
   width: 94%;
   height: 94%;
@@ -998,35 +950,40 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(24, 24, 27, 0.75);
+  border: 2px solid rgba(24, 24, 27, 0.85);
   box-shadow:
-    0 4px 0 rgba(0, 0, 0, 0.5),
+    0 4px 0 rgba(0, 0, 0, 0.55),
     inset 0 2px 2px rgba(255, 255, 255, 0.65),
-    inset 0 -3px 0 rgba(0, 0, 0, 0.25);
+    inset 0 -3px 0 rgba(0, 0, 0, 0.3);
   will-change: transform, opacity;
   overflow: hidden;
 }
 
-/* 3D Glass Dome Highlight on Top */
+/* 3D Glass Dome Highlight on Top of Tile */
 .tile::before {
   content: '';
   position: absolute;
   top: 1px;
   left: 2px;
   right: 2px;
-  height: 44%;
+  height: 42%;
   border-radius: 9px 9px 40% 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 100%);
   pointer-events: none;
-  z-index: 2;
+  z-index: 4;
 }
 
-/* Centered High-Contrast Icon Emblem */
-.tile-glyph {
-  font-size: calc(var(--tile-size) * 0.54);
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
-  z-index: 3;
-  line-height: 1;
+/* Circular High-Res Viber Character Avatar Portrait */
+.tile-avatar {
+  width: 78%;
+  height: 78%;
+  border-radius: 50%;
+  background-size: 135%;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  z-index: 2;
   pointer-events: none;
   transform: translateZ(0);
 }
@@ -1038,8 +995,8 @@ body {
 
 .tile.selected {
   transform: scale(1.15);
-  outline: 3px solid #fff;
-  box-shadow: 0 0 20px rgba(255, 199, 0, 0.95), 0 5px 0 #000;
+  outline: 3px solid var(--vibe-cyan);
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.95), 0 5px 0 #000;
   z-index: 10;
   animation: tileSelectedPulse 0.7s infinite alternate;
 }
@@ -1050,14 +1007,14 @@ body {
 }
 
 .tile.hammer-target {
-  outline: 3px dashed var(--coral-red);
+  outline: 3px dashed var(--vibe-red);
   animation: tileSelectedPulse 0.5s infinite alternate;
 }
 
 .tile.hint-pulse {
   animation: tileHintBounce 0.6s infinite alternate ease-in-out;
-  outline: 2.5px solid var(--danfo-yellow);
-  box-shadow: 0 0 15px rgba(255, 199, 0, 0.9);
+  outline: 2.5px solid var(--vibe-gold);
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.9);
   z-index: 9;
 }
 
@@ -1114,12 +1071,12 @@ body {
 }
 
 .power-line {
-  background: var(--danfo-yellow);
+  background: var(--vibe-gold);
   color: #000;
 }
 
 .power-bomb {
-  background: var(--coral-red);
+  background: var(--vibe-red);
   color: #fff;
 }
 
@@ -1161,7 +1118,7 @@ body {
   font-weight: 900;
   letter-spacing: 1px;
   color: #fff;
-  text-shadow: 0 4px 0 #18181b, 0 0 20px var(--danfo-yellow);
+  text-shadow: 0 4px 0 #18181b, 0 0 20px var(--vibe-cyan);
   pointer-events: none;
   z-index: 50;
   opacity: 0;
@@ -1176,7 +1133,7 @@ body {
 }
 
 /* ==========================================================================
-   Big Playful "Tap to crush" Call to Action
+   Big Playful "Tap to raid" Call to Action
    ========================================================================== */
 .tap-to-play-text {
   margin: 3px 0 1px;
@@ -1222,7 +1179,7 @@ body {
 }
 
 .career-stats b {
-  color: var(--danfo-yellow);
+  color: var(--vibe-cyan);
 }
 
 .bottom-controls {
@@ -1256,7 +1213,7 @@ body {
 }
 
 .btn-primary {
-  background: var(--danfo-yellow);
+  background: var(--vibe-cyan);
   color: #18181b;
   border: 2px solid var(--charcoal-ink);
   box-shadow: 0 3px 0 var(--charcoal-ink);
@@ -1278,7 +1235,7 @@ body {
 }
 
 /* ==========================================================================
-   Modals Styled Exactly Like danfo.horpey.dev (Cream Sheets with 3D Depth)
+   Modals (Cream Sheets with 3D Depth)
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -1300,7 +1257,7 @@ body {
   pointer-events: auto;
 }
 
-/* Danfo Cream Sheet */
+/* Cream Sheet */
 .modal-card.danfo-sheet {
   background: #FFFDF8;
   color: var(--charcoal-ink);
@@ -1321,7 +1278,7 @@ body {
   transform: translateY(0);
 }
 
-/* Scenic Banner with Area Pill & Circular Close */
+/* Scenic Banner with Sector Pill & Circular Close */
 .scenic-banner {
   position: relative;
   width: 100%;
@@ -1329,14 +1286,14 @@ body {
   border-radius: 22px 22px 0 0;
   border-bottom: 3px solid var(--charcoal-ink);
   overflow: hidden;
-  background: linear-gradient(180deg, #1e1b4b 0%, #431407 50%, #b45309 80%, #f59e0b 100%);
+  background: linear-gradient(180deg, #1e1b4b 0%, #431407 50%, #7c3aed 80%, #a855f7 100%);
 }
 
 .scenic-area-pill {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: var(--lagos-green);
+  background: #4f46e5;
   color: #fff;
   border: 2px solid var(--charcoal-ink);
   box-shadow: 0 2.5px 0 var(--charcoal-ink);
@@ -1433,16 +1390,16 @@ body {
 }
 
 .sheet-hole.punched {
-  background: #eab308;
+  background: var(--vibe-gold);
   border-color: #ca8a04;
-  box-shadow: 0 0 8px rgba(234, 179, 8, 0.8);
+  box-shadow: 0 0 8px rgba(250, 204, 21, 0.85);
   transform: scale(1.15);
 }
 
-/* Big Chunky Yellow Button (Exact Match!) */
+/* Big Chunky Yellow Button */
 .btn-danfo-cta {
   width: 100%;
-  background: var(--danfo-yellow);
+  background: var(--vibe-gold);
   color: var(--charcoal-ink);
   border: 2.5px solid var(--charcoal-ink);
   border-radius: 16px;
@@ -1492,7 +1449,7 @@ body {
 .hurry-tag {
   font-size: 0.88rem;
   font-weight: 800;
-  color: #15803d;
+  color: #4f46e5;
   margin-bottom: 10px;
 }
 
@@ -1569,7 +1526,7 @@ body {
 }
 
 .nickname-input:focus {
-  border-color: var(--danfo-yellow-dark);
+  border-color: var(--vibe-cyan);
 }
 
 .modal-actions {
@@ -1586,7 +1543,7 @@ body {
   gap: 8px;
   margin: 8px 0;
   font-size: 2.2rem;
-  color: #eab308;
+  color: var(--vibe-gold);
   filter: drop-shadow(0 2px 4px rgba(234, 179, 8, 0.5));
 }
 
@@ -1617,12 +1574,12 @@ body {
   height: 84px;
   border-radius: 16px;
   margin: 6px 0;
-  border: 2.5px solid #8b5cf6;
+  border: 2.5px solid var(--vibe-purple);
   box-shadow: 0 4px 0 #6b21a8;
 }
 
 .btn-download-pfp {
-  background: #8b5cf6;
+  background: var(--vibe-purple);
   color: #fff;
   padding: 6px 12px;
   border-radius: 999px;
@@ -1679,7 +1636,7 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: var(--danfo-yellow);
+  background: var(--vibe-cyan);
   color: #18181b;
   border: 2px solid var(--charcoal-ink);
   box-shadow: 0 2px 0 var(--charcoal-ink);
@@ -1737,8 +1694,8 @@ body {
 }
 
 .saga-stage-node.current {
-  background: var(--danfo-yellow);
-  border-color: #ca8a04;
+  background: var(--vibe-cyan);
+  border-color: #0d9488;
   transform: scale(1.06);
 }
 
@@ -1800,7 +1757,7 @@ body {
 /* Laser Beam Effect */
 .laser-beam {
   position: absolute;
-  background: linear-gradient(90deg, transparent, #facc15, #ffffff, #facc15, transparent);
+  background: linear-gradient(90deg, transparent, #00f5d4, #ffffff, #00f5d4, transparent);
   z-index: 25;
   pointer-events: none;
   animation: beamFlash 0.3s forwards;
@@ -1816,7 +1773,7 @@ body {
   top: 0;
   height: 100%;
   width: 8px;
-  background: linear-gradient(180deg, transparent, #facc15, #ffffff, #facc15, transparent);
+  background: linear-gradient(180deg, transparent, #00f5d4, #ffffff, #00f5d4, transparent);
 }
 
 @keyframes beamFlash {
