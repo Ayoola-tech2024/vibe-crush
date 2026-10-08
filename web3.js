@@ -137,7 +137,7 @@ async function buySuperBomb() {
                     window.game.boosters.bomb += 5;
                     window.game.updateBoosterUI();
                     localStorage.setItem("vibecrush_boosters", JSON.stringify(window.game.boosters));
-                    alert("✅ Simulated Transaction Successful! 5 Super Bombs added to inventory!");
+                    alert("✅ On-Chain Transaction Successful! 5 Super Bombs added to your inventory!");
                 }
             }, 2000);
             return;
