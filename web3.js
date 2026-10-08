@@ -68,7 +68,7 @@ function simulatePrivyLogin(method) {
 
         // Fake balance for demo
         coinsValue.innerText = "5000.00";
-    }, 1500);
+    }, 500);
 }
 
 // The Real MetaMask Onboarding
@@ -139,7 +139,7 @@ async function buySuperBomb() {
                     localStorage.setItem("vibecrush_boosters", JSON.stringify(window.game.boosters));
                     alert("✅ On-Chain Transaction Successful! 5 Super Bombs added to your inventory!");
                 }
-            }, 2000);
+            }, 500);
             return;
         }
 
