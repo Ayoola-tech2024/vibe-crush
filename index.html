@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <!-- Fullscreen Particle Effects Canvas -->
@@ -112,13 +112,23 @@
             </div>
           </div>
 
-          <!-- Free Viber Reward Card -->
-          <div class="tactile-card viber-reward-card" id="btnTokunboReward">
-            <div class="reward-viber-icon">🤖</div>
-            <div class="reward-text">
-              <span class="reward-subtitle">Free with sign-in</span>
-              <span class="reward-title">Scout Viber</span>
+          <!-- Web3 Wallet Connection Card -->
+          <div class="tactile-card viber-reward-card" id="btnWeb3Connect" style="background: var(--charcoal-ink); cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="reward-viber-icon" style="background: #F6851B;">🦊</div>
+                <div class="reward-text">
+                <span class="reward-subtitle" id="web3Status" style="color: var(--vibe-gold);">Not Connected</span>
+                <span class="reward-title" id="web3ActionText">Connect Wallet</span>
+                </div>
             </div>
+          </div>
+          
+          <!-- Burn to Boost Card (Hidden until connected) -->
+          <div class="tactile-card viber-reward-card hidden" id="btnWeb3Boost" style="background: var(--alert-red); margin-top: 10px; cursor: pointer; color: white;">
+             <div style="text-align: center; width: 100%;">
+                 <strong style="font-size: 1.1rem;">🔥 Buy Super Bomb</strong><br/>
+                 <span style="font-size: 0.85rem; opacity: 0.9;">Spend 50 $VCT</span>
+             </div>
           </div>
         </div>
 
@@ -501,7 +511,9 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.11.1/ethers.umd.min.js"></script>
   <script src="audio.js"></script>
   <script src="game.js"></script>
+  <script src="web3.js"></script>
 </body>
 </html>
