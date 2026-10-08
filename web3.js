@@ -20,15 +20,66 @@ const btnConnect = document.getElementById("btnWeb3Connect");
 const btnBoost = document.getElementById("btnWeb3Boost");
 const web3Status = document.getElementById("web3Status");
 const web3ActionText = document.getElementById("web3ActionText");
-const coinsValue = document.getElementById("coinsValue"); // We take over the Gems UI!
+const coinsValue = document.getElementById("coinsValue");
 
-async function initWeb3() {
+const modalPrivy = document.getElementById("modalPrivy");
+const btnClosePrivy = document.getElementById("btnClosePrivy");
+
+let isSimulated = false; // Track if they used the easy Privy flow
+
+if (btnClosePrivy) {
+    btnClosePrivy.addEventListener("click", () => modalPrivy.classList.remove("active"));
+}
+
+// Open Modal instead of forcing MetaMask
+function openAuthModal() {
+    if (window.ethereum == null && !isSimulated) {
+        // If no metamask, show Privy modal immediately
+        modalPrivy.classList.add("active");
+    } else if (isSimulated || userAddress) {
+        // Already connected
+        return;
+    } else {
+        // Show modal allowing choice
+        modalPrivy.classList.add("active");
+    }
+}
+
+// The "Easy" Non-Web3 Onboarding
+function simulatePrivyLogin(method) {
+    const btns = document.querySelectorAll('.privy-simulate-btn');
+    btns[0].innerHTML = "⏳ Authenticating securely...";
+    
+    setTimeout(() => {
+        isSimulated = true;
+        userAddress = "0x" + Math.random().toString(16).slice(2, 8) + "..." + Math.random().toString(16).slice(2, 6);
+        
+        modalPrivy.classList.remove("active");
+        
+        // Update UI
+        btnConnect.style.opacity = "1";
+        btnConnect.style.background = "var(--vibe-cyan)";
+        web3ActionText.innerText = `${userAddress}`;
+        web3ActionText.style.color = "var(--charcoal-ink)";
+        web3Status.innerText = "Privy Connected";
+        web3Status.style.color = "var(--charcoal-ink)";
+        
+        btnBoost.classList.remove("hidden");
+
+        // Fake balance for demo
+        coinsValue.innerText = "5000.00";
+    }, 1500);
+}
+
+// The Real MetaMask Onboarding
+async function initWeb3Real() {
     if (window.ethereum == null) {
-        alert("⚠️ Please install MetaMask or a Web3 wallet browser extension!");
+        alert("⚠️ Please install MetaMask or use the Email/Google login above!");
         return;
     }
 
     try {
+        modalPrivy.classList.remove("active");
         btnConnect.style.opacity = "0.5";
         web3ActionText.innerText = "Connecting...";
 
@@ -72,6 +123,26 @@ async function updateBalance() {
 async function buySuperBomb() {
     try {
         btnBoost.style.opacity = "0.5";
+        
+        if (isSimulated) {
+            btnBoost.innerHTML = `<div style="text-align: center; width: 100%;"><strong>⏳ Generating Wallet Signature...</strong></div>`;
+            setTimeout(() => {
+                btnBoost.innerHTML = `<div style="text-align: center; width: 100%;"><strong>✅ Super Bomb Activated!</strong></div>`;
+                setTimeout(() => { btnBoost.innerHTML = `<div style="text-align: center; width: 100%;"><strong style="font-size: 1.1rem;">🔥 Buy Super Bomb</strong><br/><span style="font-size: 0.85rem; opacity: 0.9;">Spend 50 $VCT</span></div>`; }, 3000);
+                
+                let currentBal = parseFloat(coinsValue.innerText);
+                if (currentBal >= 50) coinsValue.innerText = (currentBal - 50).toFixed(2);
+                
+                if (typeof window.game !== 'undefined') {
+                    window.game.boosters.bomb += 5;
+                    window.game.updateBoosterUI();
+                    localStorage.setItem("vibecrush_boosters", JSON.stringify(window.game.boosters));
+                    alert("✅ Simulated Transaction Successful! 5 Super Bombs added to inventory!");
+                }
+            }, 2000);
+            return;
+        }
+
         btnBoost.innerHTML = `<div style="text-align: center; width: 100%;"><strong>⏳ Confirming in Wallet...</strong></div>`;
         
         const tx = await vctContract.transfer(BURN_ADDRESS, BOOST_PRICE);
@@ -105,5 +176,5 @@ async function buySuperBomb() {
     }
 }
 
-if (btnConnect) btnConnect.addEventListener("click", initWeb3);
+if (btnConnect) btnConnect.addEventListener("click", openAuthModal);
 if (btnBoost) btnBoost.addEventListener("click", buySuperBomb);

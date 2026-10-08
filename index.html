@@ -491,6 +491,36 @@
     </div>
   </div>
 
+  <!-- Privy Auth Modal Simulator -->
+  <div id="modalPrivy" class="modal-overlay">
+    <div class="modal-card danfo-sheet" style="max-width: 400px; padding: 25px; position: relative;">
+      <div class="modal-header" style="background: none; border-bottom: none; text-align: left; padding: 0;">
+        <h2 style="font-size: 1.4rem; color: #18181b; margin-bottom: 5px;">Log in or sign up</h2>
+        <p style="color: #4b5563; font-size: 0.9rem; font-weight: 600;">Welcome to Vibe Crush Web3</p>
+      </div>
+
+      <div class="modal-actions" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+        <button class="btn-danfo-cta privy-simulate-btn" onclick="simulatePrivyLogin('Google')" style="background: #ffffff; color: #18181b; border: 1px solid #ccc; justify-content: center; width: 100%;">
+            <img src="https://img.icons8.com/color/48/000000/google-logo.png" width="20" alt="Google" style="margin-right: 10px;"> Continue with Google
+        </button>
+        <button class="btn-danfo-cta privy-simulate-btn" onclick="simulatePrivyLogin('Discord')" style="background: #5865F2; color: #ffffff; justify-content: center; width: 100%;">
+            <img src="https://img.icons8.com/color/48/000000/discord-logo.png" width="20" alt="Discord" style="margin-right: 10px;"> Continue with Discord
+        </button>
+        
+        <div style="text-align: center; margin: 10px 0; color: #a1a1aa; font-weight: 700; font-size: 0.8rem;">OR</div>
+        
+        <button class="btn-danfo-cta" onclick="initWeb3Real()" style="background: var(--charcoal-ink); color: #fff; justify-content: center; width: 100%;">
+            🦊 Connect MetaMask
+        </button>
+      </div>
+      
+      <div style="margin-top: 20px; text-align: center; color: #a1a1aa; font-size: 0.75rem;">
+        Protected by <strong>Privy</strong>
+      </div>
+      <button id="btnClosePrivy" class="tactile-icon-btn" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.2rem; color: #000; box-shadow: none;">✖</button>
+    </div>
+  </div>
+
   <!-- PFP Gallery / Trophy Modal -->
   <div id="modalGallery" class="modal-overlay">
     <div class="modal-card danfo-sheet" style="max-width: 440px;">
